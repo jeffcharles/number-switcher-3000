@@ -1,5 +1,7 @@
 # Let Me In
 
+[![Build Status](https://travis-ci.org/jeffcharles/let-me-in.svg?branch=master)](https://travis-ci.org/jeffcharles/let-me-in)
+
 A project for setting up number forwarding for an apartment buzzer
 
 ## Running the site
