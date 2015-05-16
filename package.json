@@ -13,6 +13,10 @@
   },
   "author": "Jeffrey Charles <jeffreycharles@beyondtechnicallycorrect.com>",
   "license": "BSD",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeffcharles/let-me-in"
+  },
   "devDependencies": {
     "babel-core": "^5.4.2",
     "babel-eslint": "^3.1.1",
