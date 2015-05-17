@@ -19,14 +19,29 @@ describe('routes', function() {
         .expect({actions: ['login']});
     });
 
-    it('should list phonenumbers when logged in', function() {
+    it('should list logout and phonenumbers when logged in', function() {
       var agent = request.agent(app);
       return login(agent).then(function() {
         return agent.get('/api')
           .set('accept', 'application/json')
           .expect(200)
           .expect('content-type', /json/)
-          .expect({actions: ['phonenumbers']});
+          .expect({actions: ['logout', 'phonenumbers']});
+      });
+    });
+  });
+
+  describe('/logout', function() {
+    it('should log the user out', function() {
+      var agent = request.agent(app);
+      return login(agent).then(function() {
+        return agent.post('/api/logout')
+          .expect(204);
+      }).then(function() {
+        return agent.get('/api')
+          .expect(200)
+          .expect('content-type', /json/)
+          .expect({actions: ['login']});
       });
     });
   });

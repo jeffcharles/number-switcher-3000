@@ -5,7 +5,7 @@ var bodyParser = require('body-parser'),
 var router = express.Router();
 
 router.get('/', function(req, res) {
-  var actions = req.authenticated ? ['phonenumbers'] : ['login'];
+  var actions = req.authenticated ? ['logout', 'phonenumbers'] : ['login'];
   res.json({ 'actions': actions });
 });
 
@@ -24,6 +24,11 @@ router.use(function(req, res, next) {
   } else {
     next();
   }
+});
+
+router.post('/logout', function(req, res) {
+  res.clearCookie('user');
+  res.sendStatus(204);
 });
 
 router.get('/phonenumbers', function(req, res) {

@@ -66,6 +66,17 @@ class NumberPicker extends React.Component {
       });
   }
 
+  onLogout() {
+    request.post('/api/logout')
+      .end(err => {
+        if (err) {
+          throw err;
+        }
+
+        location.reload();
+      });
+  }
+
   render() {
     return (
       <div>
@@ -84,7 +95,7 @@ class NumberPicker extends React.Component {
                 </div>
               );
             })}
-            <button type="submit">Save</button>
+            <button type="submit">Save</button> <button onClick={this.onLogout}>Logout</button>
           </form>
         )}
       </div>
