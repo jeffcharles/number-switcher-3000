@@ -18,7 +18,7 @@ class Login extends React.Component {
   onLogin(e) {
     e.preventDefault();
 
-    request.post('/api/auth')
+    request.post('/api/login')
       .set('content-type', 'application/json')
       .send({ loginToken: this.state.loginToken })
       .end(err => {
@@ -102,10 +102,10 @@ class App extends React.Component {
           throw err;
         }
 
-        if (_.includes(res.body.actions, 'auth')) {
-          this.setState({loading: false, needsAuth: true});
+        if (_.includes(res.body.actions, 'login')) {
+          this.setState({loading: false, needToLogin: true});
         } else if (_.includes(res.body.actions, 'phonenumbers')) {
-          this.setState({loading: false, needsAuth: false, phonenumbers: true});
+          this.setState({loading: false, needToLogin: false, phonenumbers: true});
         } else {
           throw new Error('Cannot load phone numbers');
         }
@@ -116,7 +116,7 @@ class App extends React.Component {
     let page;
     if (this.state.loading) {
       page = <Loading />;
-    } else if (this.state.needsAuth) {
+    } else if (this.state.needToLogin) {
       page = <Login />;
     } else if (this.state.phonenumbers) {
       page = <NumberPicker />;

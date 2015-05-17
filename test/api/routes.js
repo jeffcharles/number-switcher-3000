@@ -4,19 +4,19 @@ var request = require('supertest-as-promised'),
 
 describe('routes', function() {
   function login(agent) {
-    return agent.post('/api/auth')
+    return agent.post('/api/login')
       .set('content-type', 'application/json')
       .send({ loginToken: conf.login_token })
       .expect(204);
   }
 
   describe('/', function() {
-    it('should list auth when not logged in', function() {
+    it('should list login when not logged in', function() {
       return request(app).get('/api')
         .set('accept', 'application/json')
         .expect(200)
         .expect('content-type', /json/)
-        .expect({actions: ['auth']});
+        .expect({actions: ['login']});
     });
 
     it('should list phonenumbers when logged in', function() {

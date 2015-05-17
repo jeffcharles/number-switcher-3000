@@ -5,11 +5,11 @@ var bodyParser = require('body-parser'),
 var router = express.Router();
 
 router.get('/', function(req, res) {
-  var actions = req.authenticated ? ['phonenumbers'] : ['auth'];
+  var actions = req.authenticated ? ['phonenumbers'] : ['login'];
   res.json({ 'actions': actions });
 });
 
-router.post('/auth', bodyParser.json(), function(req, res) {
+router.post('/login', bodyParser.json(), function(req, res) {
   if (req.body.loginToken === conf.login_token) {
     res.cookie('user', {id: conf.user_id}, { httpOnly: true });
     res.sendStatus(204);
