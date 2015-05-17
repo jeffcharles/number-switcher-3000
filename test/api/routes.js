@@ -52,7 +52,7 @@ describe('routes', function() {
       return login(agent).then(function() {
         return agent.put('/api/activephonenumber')
           .set('content-type', 'application/json')
-          .send({ number: '222-222-2222' })
+          .send({ number: conf.jeffs_number })
           .expect(204);
       });
     });
@@ -76,7 +76,7 @@ describe('routes', function() {
     it('should return 401 if not logged in', function() {
       return request(app).put('/api/activephonenumber')
         .set('content-type', 'application/json')
-        .send({ number: '222-222-2222' })
+        .send({ number: conf.jeffs_number })
         .expect(401);
     });
   });
@@ -91,8 +91,8 @@ describe('routes', function() {
           .expect('content-type', /json/)
           .expect({
             numbers: [
-              {name: 'Jeff', number: '222-222-2222'},
-              {name: 'Brennen', number: '222-222-2223'}
+              {name: 'Jeff', number: conf.jeffs_number},
+              {name: 'Brennen', number: conf.brennens_number}
             ]
           });
       });

@@ -38,7 +38,7 @@ router.post('/logout', function(req, res) {
 router.put('/activephonenumber', bodyParser.json(), function(req, res, next) {
   if (
     !req.body.number ||
-    !_.includes(['222-222-2222', '222-222-2223'], req.body.number)
+    !_.includes([conf.jeffs_number, conf.brennens_number], req.body.number)
   ) {
     res.sendStatus(400);
     return;
@@ -67,10 +67,10 @@ router.get('/phonenumbers', function(req, res) {
   res.json({
     numbers: [{
       name: 'Jeff',
-      number: '222-222-2222'
+      number: conf.jeffs_number
     }, {
       name: 'Brennen',
-      number: '222-222-2223'
+      number: conf.brennens_number
     }]
   });
 });
