@@ -1,6 +1,11 @@
+var AWS = require('aws-sdk'),
+  conf = require('./conf');
+
+AWS.config.apiVersions = { s3: '2006-03-01' };
+AWS.config.update({ region: conf.aws_region });
+
 var cookieParser = require('cookie-parser'),
   express = require('express'),
-  conf = require('./conf'),
   routes = require('./routes');
 
 var app = express();

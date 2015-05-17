@@ -1,7 +1,10 @@
 var _ = require('lodash'),
+  AWS = require('aws-sdk'),
   bodyParser = require('body-parser'),
   express = require('express'),
   conf = require('./conf');
+
+var s3 = new AWS.S3();
 
 var router = express.Router();
 
@@ -32,7 +35,7 @@ router.post('/logout', function(req, res) {
   res.sendStatus(204);
 });
 
-router.put('/activephonenumber', bodyParser.json(), function(req, res) {
+router.put('/activephonenumber', bodyParser.json(), function(req, res, next) {
   if (
     !req.body.number ||
     !_.includes(['222-222-2222', '222-222-2223'], req.body.number)
@@ -40,7 +43,24 @@ router.put('/activephonenumber', bodyParser.json(), function(req, res) {
     res.sendStatus(400);
     return;
   }
-  res.sendStatus(204);
+
+  var xml =
+    '<?xml version="1.0" encoding="UTF-8"?><Response><Dial>' +
+    req.body.number +
+    '</Dial></Response>';
+  s3.putObject({
+    Bucket: conf.aws_s3_bucket,
+    Key: 'number.xml',
+    ACL: 'public-read',
+    Body: xml,
+    ContentType: 'application/xml'
+  }, function(err) {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.sendStatus(204);
+  });
 });
 
 router.get('/phonenumbers', function(req, res) {
