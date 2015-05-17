@@ -3,7 +3,7 @@ var express = require('express'),
 
 var app = express();
 
-app.use(routes);
+app.use('/api', routes);
 app.use(express.static('public'));
 
 module.exports = app;

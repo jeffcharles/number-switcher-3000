@@ -41,6 +41,7 @@
   "dependencies": {
     "express": "^4.12.3",
     "forever": "^0.14.1",
-    "superagent": "~1.2.0"
+    "superagent": "~1.2.0",
+    "lodash": "~3.8.0"
   }
 }
