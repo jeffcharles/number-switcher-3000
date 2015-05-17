@@ -66,6 +66,10 @@ class NumberPicker extends React.Component {
       });
   }
 
+  onActiveNumberChange(e) {
+    this.setState({ activeNumber: e.target.value });
+  }
+
   onLogout() {
     request.post('/api/logout')
       .end(err => {
@@ -77,19 +81,33 @@ class NumberPicker extends React.Component {
       });
   }
 
+  onUpdateNumber(e) {
+    e.preventDefault();
+
+    request.put('/api/activephonenumber')
+      .set('content-type', 'application/json')
+      .send({ number: this.state.activeNumber })
+      .end(err => {
+        if (err) {
+          throw err;
+        }
+      });
+  }
+
   render() {
     return (
       <div>
         <h1>Pick the number</h1>
         {this.state.loading ?
           <Loading /> : (
-          <form>
-            {this.state.numbers.map(function(number) {
+          <form onSubmit={this.onUpdateNumber.bind(this)}>
+            {this.state.numbers.map(number => {
               return (
                 <div className="radio" key={number.number}>
                   <label>
                     <input type="radio" name="phone-number"
-                      value={number.number} />
+                      value={number.number}
+                      onChange={this.onActiveNumberChange.bind(this)} />
                     {number.name}: {number.number}
                   </label>
                 </div>

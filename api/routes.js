@@ -1,4 +1,5 @@
-var bodyParser = require('body-parser'),
+var _ = require('lodash'),
+  bodyParser = require('body-parser'),
   express = require('express'),
   conf = require('./conf');
 
@@ -28,6 +29,17 @@ router.use(function(req, res, next) {
 
 router.post('/logout', function(req, res) {
   res.clearCookie('user');
+  res.sendStatus(204);
+});
+
+router.put('/activephonenumber', bodyParser.json(), function(req, res) {
+  if (
+    !req.body.number ||
+    !_.includes(['222-222-2222', '222-222-2223'], req.body.number)
+  ) {
+    res.sendStatus(400);
+    return;
+  }
   res.sendStatus(204);
 });
 

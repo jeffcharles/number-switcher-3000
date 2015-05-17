@@ -46,6 +46,41 @@ describe('routes', function() {
     });
   });
 
+  describe('/activephonenumber', function() {
+    it('should return 204 if valid', function() {
+      var agent = request.agent(app);
+      return login(agent).then(function() {
+        return agent.put('/api/activephonenumber')
+          .set('content-type', 'application/json')
+          .send({ number: '222-222-2222' })
+          .expect(204);
+      });
+    });
+
+    [
+      { foo: 'bar' },
+      { number: 'foo' },
+      { number: '222-222-2224' }
+    ].forEach(function(body) {
+      it('should return 400 if invalid ' + JSON.stringify(body), function() {
+        var agent = request.agent(app);
+        return login(agent).then(function() {
+          return agent.put('/api/activephonenumber')
+            .set('content-type', 'application/json')
+            .send(body)
+            .expect(400);
+        });
+      });
+    });
+
+    it('should return 401 if not logged in', function() {
+      return request(app).put('/api/activephonenumber')
+        .set('content-type', 'application/json')
+        .send({ number: '222-222-2222' })
+        .expect(401);
+    });
+  });
+
   describe('/phonenumbers', function() {
     it('should return a list of phone numbers when logged in', function() {
       var agent = request.agent(app);
