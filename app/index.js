@@ -10,6 +10,47 @@ class Loading extends React.Component {
   }
 }
 
+class Login extends React.Component {
+  componentWillMount() {
+    this.setState({ loginToken: '' });
+  }
+
+  onLogin(e) {
+    e.preventDefault();
+
+    request.post('/api/auth')
+      .set('content-type', 'application/json')
+      .send({ loginToken: this.state.loginToken })
+      .end(err => {
+        if (err) {
+          throw err;
+        }
+
+        location.reload();
+      });
+  }
+
+  onLoginTokenChange(e) {
+    this.setState({ loginToken: e.target.value });
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Login</h1>
+        <form onSubmit={this.onLogin.bind(this)}>
+          <div>
+            <label htmlFor="loginToken">Login token</label>
+            <input type="text" id="loginToken" value={this.loginToken}
+              onChange={this.onLoginTokenChange.bind(this)} />
+          </div>
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    );
+  }
+}
+
 class NumberPicker extends React.Component {
   componentWillMount() {
     this.setState({loading: true});
@@ -55,15 +96,16 @@ class App extends React.Component {
   componentWillMount() {
     this.setState({loading: true});
 
-    const self = this;
     request.get('/api')
       .end((err, res) => {
         if (err) {
           throw err;
         }
 
-        if (_.includes(res.body.actions, 'phonenumbers')) {
-          self.setState({loading: false, phonenumbers: true});
+        if (_.includes(res.body.actions, 'auth')) {
+          this.setState({loading: false, needsAuth: true});
+        } else if (_.includes(res.body.actions, 'phonenumbers')) {
+          this.setState({loading: false, needsAuth: false, phonenumbers: true});
         } else {
           throw new Error('Cannot load phone numbers');
         }
@@ -74,6 +116,8 @@ class App extends React.Component {
     let page;
     if (this.state.loading) {
       page = <Loading />;
+    } else if (this.state.needsAuth) {
+      page = <Login />;
     } else if (this.state.phonenumbers) {
       page = <NumberPicker />;
     }

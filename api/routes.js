@@ -1,11 +1,29 @@
-var express = require('express');
+var bodyParser = require('body-parser'),
+  express = require('express'),
+  conf = require('./conf');
 
 var router = express.Router();
 
 router.get('/', function(req, res) {
-  res.json({
-    'actions': ['phonenumbers']
-  });
+  var actions = req.authenticated ? ['phonenumbers'] : ['auth'];
+  res.json({ 'actions': actions });
+});
+
+router.post('/auth', bodyParser.json(), function(req, res) {
+  if (req.body.loginToken === conf.login_token) {
+    res.cookie('user', {id: conf.user_id}, { httpOnly: true });
+    res.sendStatus(204);
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+router.use(function(req, res, next) {
+  if (!req.authenticated) {
+    res.sendStatus(401);
+  } else {
+    next();
+  }
 });
 
 router.get('/phonenumbers', function(req, res) {
