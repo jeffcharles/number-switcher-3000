@@ -11,5 +11,5 @@ deploy:
   env: number-switcher-3000
   bucket_name: number-switcher-3000-deployments
   on:
-    repo: number-switcher-3000
+    repo: jeffcharles/number-switcher-3000
     branch: master
