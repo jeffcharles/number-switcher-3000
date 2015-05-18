@@ -6,7 +6,7 @@ deploy:
   access_key_id: $AWS_ACCESS_KEY_ID
   secret_access_key:
     secure: $AWS_SECRET_ACCESS_KEY
-    region: us-east-1
+  region: us-east-1
   app: number-switcher-3000
   env: number-switcher-3000
   bucket_name: number-switcher-3000-deployments
