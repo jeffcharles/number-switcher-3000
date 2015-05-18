@@ -6,8 +6,9 @@
     "node": "0.12.3"
   },
   "scripts": {
-    "build": "webpack -p",
-    "build-dev": "webpack -d",
+    "build": "webpack -p && npm run build:assets",
+    "build:assets": "cp app/robots.txt public/robots.txt",
+    "build:dev": "webpack -d && npm run build:assets",
     "start": "forever --minUptime 1000 api/run-server.js",
     "test": "eslint . && npm run build && mocha test/**/*.js",
     "watch": "forever --minUptime 1000 -w --watchDirectory api api/run-server.js & webpack -d --watch"
