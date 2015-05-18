@@ -1,3 +1,15 @@
 language: node_js
 node_js:
   - "0.12.3"
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key:
+    secure: $AWS_SECRET_ACCESS_KEY
+    region: us-east-1
+  app: number-switcher-3000
+  env: number-switcher-3000
+  bucket_name: number-switcher-3000-deployments
+  on:
+    repo: number-switcher-3000
+    branch: master
