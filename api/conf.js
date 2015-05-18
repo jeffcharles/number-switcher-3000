@@ -8,6 +8,7 @@ module.exports = rc('number_switcher_3000', {
   brennens_number: '222-222-2223',
   jeffs_number: '222-222-2222',
   login_token: 'login_token',
+  port: '3000',
   user_id: 'user_id'
 });
 
