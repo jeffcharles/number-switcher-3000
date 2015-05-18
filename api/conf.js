@@ -2,7 +2,7 @@ var rc = require('rc');
 
 /*eslint-disable camelcase */
 
-module.exports = rc('let_me_in', {
+module.exports = rc('number_switcher_3000', {
   aws_region: 'us-east-1',
   aws_s3_bucket: 'let-me-in-dev',
   brennens_number: '222-222-2223',
