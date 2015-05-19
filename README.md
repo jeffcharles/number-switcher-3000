@@ -32,6 +32,7 @@ A project for setting up number forwarding for an apartment buzzer
         {
             "Effect": "Allow",
             "Action": [
+                "s3:GetObject",
                 "s3:PutObject",
                 "s3:PutObjectAcl"
             ],
