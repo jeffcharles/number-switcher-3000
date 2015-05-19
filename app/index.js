@@ -67,7 +67,12 @@ class NumberPicker extends React.Component {
   }
 
   onActiveNumberChange(e) {
-    this.setState({ activeNumber: e.target.value });
+    this.setState({
+      numbers: this.state.numbers.map(n => {
+        n.active = n.number === e.target.value;
+        return n;
+      })
+    });
   }
 
   onLogout() {
@@ -84,9 +89,13 @@ class NumberPicker extends React.Component {
   onUpdateNumber(e) {
     e.preventDefault();
 
+    const activeNumber = _.find(this.state.numbers, 'active').number;
+    if (!activeNumber) {
+      throw new Error('Need to select number');
+    }
     request.put('/api/activephonenumber')
       .set('content-type', 'application/json')
-      .send({ number: this.state.activeNumber })
+      .send({ number: activeNumber })
       .end(err => {
         if (err) {
           throw err;
@@ -107,7 +116,8 @@ class NumberPicker extends React.Component {
                   <label>
                     <input type="radio" name="phone-number"
                       value={number.number}
-                      onChange={this.onActiveNumberChange.bind(this)} />
+                      onChange={this.onActiveNumberChange.bind(this)}
+                      checked={number.active} />
                     {number.name}: {number.number}
                   </label>
                 </div>

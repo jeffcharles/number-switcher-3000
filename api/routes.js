@@ -2,6 +2,7 @@ var _ = require('lodash'),
   AWS = require('aws-sdk'),
   bodyParser = require('body-parser'),
   express = require('express'),
+  xml2js = require('xml2js'),
   conf = require('./conf');
 
 var s3 = new AWS.S3();
@@ -63,15 +64,37 @@ router.put('/activephonenumber', bodyParser.json(), function(req, res, next) {
   });
 });
 
-router.get('/phonenumbers', function(req, res) {
-  res.json({
-    numbers: [{
-      name: 'Jeff',
-      number: conf.jeffs_number
-    }, {
-      name: 'Brennen',
-      number: conf.brennens_number
-    }]
+router.get('/phonenumbers', function(req, res, next) {
+  s3.getObject({
+    Bucket: conf.aws_s3_bucket,
+    Key: 'number.xml'
+  }, function(err, data) {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    xml2js.parseString(data.Body, {explicitRoot: true}, function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+
+      var number =
+        result.Response && result.Response.Dial && result.Response.Dial[0];
+
+      res.json({
+        numbers: [{
+          name: 'Jeff',
+          number: conf.jeffs_number,
+          active: number === conf.jeffs_number
+        }, {
+          name: 'Brennen',
+          number: conf.brennens_number,
+          active: number === conf.brennens_number
+        }]
+      });
+    });
   });
 });
 

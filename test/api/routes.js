@@ -89,11 +89,12 @@ describe('routes', function() {
           .set('accept', 'application/json')
           .expect(200)
           .expect('content-type', /json/)
-          .expect({
-            numbers: [
-              {name: 'Jeff', number: conf.jeffs_number},
-              {name: 'Brennen', number: conf.brennens_number}
-            ]
+          .expect(function(res) {
+            return res.body.numbers && res.body.numbers.length === 2 &&
+              res.body.numbers[0].name === 'Jeff' &&
+              res.body.numbers[0].number === conf.jeffs_number &&
+              res.body.numbers[1].name === 'Brennen' &&
+              res.body.numbers[1].number === conf.brennens_number;
           });
       });
     });
@@ -102,6 +103,41 @@ describe('routes', function() {
       return request(app).get('/api/phonenumbers')
         .set('accept', 'application/json')
         .expect(401);
+    });
+
+    it('should list which number is active', function() {
+      var agent = request.agent(app);
+      return login(agent).then(function() {
+        return agent.put('/api/activephonenumber')
+          .set('content-type', 'application/json')
+          .send({ number: conf.jeffs_number })
+          .expect(204);
+      }).then(function() {
+        return agent.get('/api/phonenumbers')
+          .set('accept', 'application/json')
+          .expect(200)
+          .expect(function(res) {
+            return res.body.numbers[0].number === conf.jeffs_number &&
+              res.body.numbers[0].active &&
+              res.body.numbers[1].number !== conf.jeffs_number &&
+              !res.body.numbers[1].active;
+          });
+      }).then(function() {
+        return agent.put('/api/activephonenumber')
+          .set('content-type', 'application/json')
+          .send({ number: conf.brennens_number })
+          .expect(204);
+      }).then(function() {
+        return agent.get('/api/phonenumbers')
+          .set('accept', 'application/json')
+          .expect(200)
+          .expect(function(res) {
+            return res.body.numbers[1].number === conf.brennens_number &&
+              res.body.numbers[1].active &&
+              res.body.numbers[0].number !== conf.brennens_number &&
+              !res.body.numbers[0].active;
+          });
+      });
     });
   });
 });
