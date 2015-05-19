@@ -1,6 +1,6 @@
 # Let Me In
 
-[![Build Status](https://travis-ci.org/jeffcharles/let-me-in.svg?branch=master)](https://travis-ci.org/jeffcharles/let-me-in)
+[![Build Status](https://travis-ci.org/jeffcharles/number-switcher-3000.svg?branch=master)](https://travis-ci.org/jeffcharles/number-switcher-3000)
 
 A project for setting up number forwarding for an apartment buzzer
 
