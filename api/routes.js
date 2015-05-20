@@ -1,3 +1,4 @@
+'use strict';
 var _ = require('lodash'),
   AWS = require('aws-sdk'),
   bodyParser = require('body-parser'),
@@ -74,9 +75,9 @@ router.get('/phonenumbers', function(req, res, next) {
       return;
     }
 
-    xml2js.parseString(data.Body, {explicitRoot: true}, function(err, result) {
-      if (err) {
-        next(err);
+    xml2js.parseString(data.Body, {explicitRoot: true}, function(err2, result) {
+      if (err2) {
+        next(err2);
         return;
       }
 

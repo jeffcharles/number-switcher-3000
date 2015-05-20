@@ -1,3 +1,4 @@
+'use strict';
 var rc = require('rc');
 
 /*eslint-disable camelcase */

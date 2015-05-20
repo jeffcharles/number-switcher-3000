@@ -1,3 +1,4 @@
+'use strict';
 var request = require('supertest-as-promised'),
   app = require('./../../api/server'),
   conf = require('./../../api/conf');
