@@ -37,7 +37,8 @@
     "webpack": "^1.9.5",
     "supertest": "~1.0.1",
     "supertest-as-promised": "~2.0.1",
-    "mocha": "~2.2.5"
+    "mocha": "~2.2.5",
+    "eslint-plugin-react": "~2.3.0"
   },
   "dependencies": {
     "express": "^4.12.3",
