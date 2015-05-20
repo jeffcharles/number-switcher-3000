@@ -1,3 +1,4 @@
+'use strict';
 require('./index.less');
 
 import React from 'react';

@@ -1,3 +1,4 @@
+'use strict';
 var conf = require('./conf'),
   server = require('./server');
 
