@@ -1,9 +1,9 @@
 'use strict';
-var rc = require('rc');
+import rc from 'rc';
 
 /*eslint-disable camelcase */
 
-module.exports = rc('number_switcher_3000', {
+export default rc('number_switcher_3000', {
   aws_region: 'us-east-1',
   aws_s3_bucket: 'number-switcher-3000-dev',
   brennens_number: '222-222-2223',

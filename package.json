@@ -6,12 +6,13 @@
     "node": "0.12.3"
   },
   "scripts": {
-    "build": "webpack -p && npm run build:assets",
+    "build": "babel api --out-dir dist && npm run build:foreverignore && webpack -p && npm run build:assets",
     "build:assets": "cp app/robots.txt public/robots.txt && cp -R app/favicons/* public",
-    "build:dev": "webpack -d && npm run build:assets",
-    "start": "forever --minUptime 1000 api/run-server.js",
-    "test": "eslint . && npm run build && mocha test/**/*.js",
-    "watch": "forever --minUptime 1000 -w --watchDirectory api api/run-server.js & npm run build:assets && webpack -d --watch"
+    "build:dev": "babel api --out-dir dist --source-maps && npm run build:foreverignore && babel test --out-dir dist-test --source-maps && webpack -d && npm run build:assets",
+    "build:foreverignore": "touch dist/.foreverignore",
+    "start": "forever --minUptime 1000 dist/run-server.js",
+    "test": "eslint . && npm run build:dev && mocha dist-test/**/*.js",
+    "watch": "babel api --watch --out-dir dist --source-maps & npm run build:foreverignore & babel test --watch --out-dir dist-test --source-maps & forever --minUptime 1000 -w --watchDirectory dist dist/run-server.js & npm run build:assets && webpack -d --watch"
   },
   "author": "Jeffrey Charles <jeffreycharles@beyondtechnicallycorrect.com>",
   "license": "BSD",
@@ -38,7 +39,8 @@
     "supertest": "~1.0.1",
     "supertest-as-promised": "~2.0.1",
     "mocha": "~2.2.5",
-    "eslint-plugin-react": "~2.3.0"
+    "eslint-plugin-react": "~2.3.0",
+    "babel": "~5.4.5"
   },
   "dependencies": {
     "express": "^4.12.3",

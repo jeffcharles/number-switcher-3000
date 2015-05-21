@@ -1,21 +1,21 @@
 'use strict';
-var _ = require('lodash'),
-  AWS = require('aws-sdk'),
-  bodyParser = require('body-parser'),
-  express = require('express'),
-  xml2js = require('xml2js'),
-  conf = require('./conf');
+import _ from 'lodash';
+import AWS from 'aws-sdk';
+import bodyParser from 'body-parser';
+import express from 'express';
+import xml2js from 'xml2js';
+import conf from './conf';
 
-var s3 = new AWS.S3();
+const s3 = new AWS.S3();
 
-var router = express.Router();
+const router = express.Router();
 
-router.get('/', function(req, res) {
-  var actions = req.authenticated ? ['logout', 'phonenumbers'] : ['login'];
+router.get('/', (req, res) => {
+  const actions = req.authenticated ? ['logout', 'phonenumbers'] : ['login'];
   res.json({ 'actions': actions });
 });
 
-router.post('/login', bodyParser.json(), function(req, res) {
+router.post('/login', bodyParser.json(), (req, res) => {
   if (req.body.loginToken === conf.login_token) {
     res.cookie('user', {id: conf.user_id}, { httpOnly: true });
     res.sendStatus(204);
@@ -24,7 +24,7 @@ router.post('/login', bodyParser.json(), function(req, res) {
   }
 });
 
-router.use(function(req, res, next) {
+router.use((req, res, next) => {
   if (!req.authenticated) {
     res.sendStatus(401);
   } else {
@@ -32,12 +32,12 @@ router.use(function(req, res, next) {
   }
 });
 
-router.post('/logout', function(req, res) {
+router.post('/logout', (req, res) => {
   res.clearCookie('user');
   res.sendStatus(204);
 });
 
-router.put('/activephonenumber', bodyParser.json(), function(req, res, next) {
+router.put('/activephonenumber', bodyParser.json(), (req, res, next) => {
   if (
     !req.body.number ||
     !_.includes([conf.jeffs_number, conf.brennens_number], req.body.number)
@@ -46,7 +46,7 @@ router.put('/activephonenumber', bodyParser.json(), function(req, res, next) {
     return;
   }
 
-  var xml =
+  const xml =
     '<?xml version="1.0" encoding="UTF-8"?><Response><Dial>' +
     req.body.number +
     '</Dial></Response>';
@@ -56,7 +56,7 @@ router.put('/activephonenumber', bodyParser.json(), function(req, res, next) {
     ACL: 'public-read',
     Body: xml,
     ContentType: 'application/xml'
-  }, function(err) {
+  }, err => {
     if (err) {
       next(err);
       return;
@@ -65,23 +65,23 @@ router.put('/activephonenumber', bodyParser.json(), function(req, res, next) {
   });
 });
 
-router.get('/phonenumbers', function(req, res, next) {
+router.get('/phonenumbers', (req, res, next) => {
   s3.getObject({
     Bucket: conf.aws_s3_bucket,
     Key: 'number.xml'
-  }, function(err, data) {
+  }, (err, data) => {
     if (err) {
       next(err);
       return;
     }
 
-    xml2js.parseString(data.Body, {explicitRoot: true}, function(err2, result) {
+    xml2js.parseString(data.Body, {explicitRoot: true}, (err2, result) => {
       if (err2) {
         next(err2);
         return;
       }
 
-      var number =
+      const number =
         result.Response && result.Response.Dial && result.Response.Dial[0];
 
       res.json({
@@ -99,4 +99,4 @@ router.get('/phonenumbers', function(req, res, next) {
   });
 });
 
-module.exports = router;
+export default router;
