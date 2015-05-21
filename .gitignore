@@ -1,4 +1,6 @@
 /.vagrant/
+/dist/
+/dist-test/
 /node_modules/
 /public/
 /npm-debug.log

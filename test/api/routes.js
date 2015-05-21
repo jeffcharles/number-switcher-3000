@@ -1,9 +1,9 @@
 'use strict';
-var request = require('supertest-as-promised'),
-  app = require('./../../api/server'),
-  conf = require('./../../api/conf');
+import request from 'supertest-as-promised';
+import app from './../../dist/server';
+import conf from './../../dist/conf';
 
-describe('routes', function() {
+describe('routes', () => {
   function login(agent) {
     return agent.post('/api/login')
       .set('content-type', 'application/json')
@@ -11,134 +11,134 @@ describe('routes', function() {
       .expect(204);
   }
 
-  describe('/', function() {
-    it('should list login when not logged in', function() {
-      return request(app).get('/api')
+  describe('/', () => {
+    it('should list login when not logged in', () =>
+      request(app).get('/api')
         .set('accept', 'application/json')
         .expect(200)
         .expect('content-type', /json/)
-        .expect({actions: ['login']});
-    });
+        .expect({ actions: ['login'] })
+    );
 
-    it('should list logout and phonenumbers when logged in', function() {
-      var agent = request.agent(app);
-      return login(agent).then(function() {
-        return agent.get('/api')
+    it('should list logout and phonenumbers when logged in', () => {
+      const agent = request.agent(app);
+      return login(agent).then(() =>
+        agent.get('/api')
           .set('accept', 'application/json')
           .expect(200)
           .expect('content-type', /json/)
-          .expect({actions: ['logout', 'phonenumbers']});
-      });
+          .expect({ actions: ['logout', 'phonenumbers'] })
+      );
     });
   });
 
-  describe('/logout', function() {
-    it('should log the user out', function() {
-      var agent = request.agent(app);
-      return login(agent).then(function() {
-        return agent.post('/api/logout')
-          .expect(204);
-      }).then(function() {
-        return agent.get('/api')
+  describe('/logout', () => {
+    it('should log the user out', () => {
+      const agent = request.agent(app);
+      return login(agent).then(() =>
+        agent.post('/api/logout')
+          .expect(204)
+      ).then(() =>
+        agent.get('/api')
           .expect(200)
           .expect('content-type', /json/)
-          .expect({actions: ['login']});
-      });
+          .expect({actions: ['login']})
+      );
     });
   });
 
-  describe('/activephonenumber', function() {
-    it('should return 204 if valid', function() {
-      var agent = request.agent(app);
-      return login(agent).then(function() {
-        return agent.put('/api/activephonenumber')
+  describe('/activephonenumber', () => {
+    it('should return 204 if valid', () => {
+      const agent = request.agent(app);
+      return login(agent).then(() =>
+        agent.put('/api/activephonenumber')
           .set('content-type', 'application/json')
           .send({ number: conf.jeffs_number })
-          .expect(204);
-      });
+          .expect(204)
+      );
     });
 
     [
       { foo: 'bar' },
       { number: 'foo' },
       { number: '222-222-2224' }
-    ].forEach(function(body) {
-      it('should return 400 if invalid ' + JSON.stringify(body), function() {
-        var agent = request.agent(app);
-        return login(agent).then(function() {
-          return agent.put('/api/activephonenumber')
+    ].forEach(body => {
+      it('should return 400 if invalid ' + JSON.stringify(body), () => {
+        const agent = request.agent(app);
+        return login(agent).then(() =>
+          agent.put('/api/activephonenumber')
             .set('content-type', 'application/json')
             .send(body)
-            .expect(400);
-        });
+            .expect(400)
+        );
       });
     });
 
-    it('should return 401 if not logged in', function() {
-      return request(app).put('/api/activephonenumber')
+    it('should return 401 if not logged in', () =>
+      request(app).put('/api/activephonenumber')
         .set('content-type', 'application/json')
         .send({ number: conf.jeffs_number })
-        .expect(401);
-    });
+        .expect(401)
+    );
   });
 
-  describe('/phonenumbers', function() {
-    it('should return a list of phone numbers when logged in', function() {
-      var agent = request.agent(app);
-      return login(agent).then(function() {
-        return agent.get('/api/phonenumbers')
+  describe('/phonenumbers', () => {
+    it('should return a list of phone numbers when logged in', () => {
+      const agent = request.agent(app);
+      return login(agent).then(() =>
+        agent.get('/api/phonenumbers')
           .set('accept', 'application/json')
           .expect(200)
           .expect('content-type', /json/)
-          .expect(function(res) {
-            return res.body.numbers && res.body.numbers.length === 2 &&
+          .expect(res =>
+            res.body.numbers && res.body.numbers.length === 2 &&
               res.body.numbers[0].name === 'Jeff' &&
               res.body.numbers[0].number === conf.jeffs_number &&
               res.body.numbers[1].name === 'Brennen' &&
-              res.body.numbers[1].number === conf.brennens_number;
-          });
-      });
+              res.body.numbers[1].number === conf.brennens_number
+          )
+      );
     });
 
-    it('should 401 when not logged in', function() {
-      return request(app).get('/api/phonenumbers')
+    it('should 401 when not logged in', () =>
+      request(app).get('/api/phonenumbers')
         .set('accept', 'application/json')
-        .expect(401);
-    });
+        .expect(401)
+    );
 
-    it('should list which number is active', function() {
-      var agent = request.agent(app);
-      return login(agent).then(function() {
-        return agent.put('/api/activephonenumber')
+    it('should list which number is active', () => {
+      const agent = request.agent(app);
+      return login(agent).then(() =>
+        agent.put('/api/activephonenumber')
           .set('content-type', 'application/json')
           .send({ number: conf.jeffs_number })
-          .expect(204);
-      }).then(function() {
-        return agent.get('/api/phonenumbers')
+          .expect(204)
+      ).then(() =>
+        agent.get('/api/phonenumbers')
           .set('accept', 'application/json')
           .expect(200)
-          .expect(function(res) {
-            return res.body.numbers[0].number === conf.jeffs_number &&
+          .expect(res =>
+            res.body.numbers[0].number === conf.jeffs_number &&
               res.body.numbers[0].active &&
               res.body.numbers[1].number !== conf.jeffs_number &&
-              !res.body.numbers[1].active;
-          });
-      }).then(function() {
-        return agent.put('/api/activephonenumber')
+              !res.body.numbers[1].active
+          )
+      ).then(() =>
+        agent.put('/api/activephonenumber')
           .set('content-type', 'application/json')
           .send({ number: conf.brennens_number })
-          .expect(204);
-      }).then(function() {
-        return agent.get('/api/phonenumbers')
+          .expect(204)
+      ).then(() =>
+        agent.get('/api/phonenumbers')
           .set('accept', 'application/json')
           .expect(200)
-          .expect(function(res) {
-            return res.body.numbers[1].number === conf.brennens_number &&
+          .expect(res =>
+            res.body.numbers[1].number === conf.brennens_number &&
               res.body.numbers[1].active &&
               res.body.numbers[0].number !== conf.brennens_number &&
-              !res.body.numbers[0].active;
-          });
-      });
+              !res.body.numbers[0].active
+          )
+      );
     });
   });
 });

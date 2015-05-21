@@ -1,7 +1,7 @@
 'use strict';
-var conf = require('./conf'),
-  server = require('./server');
+import conf from './conf';
+import server from './server';
 
-server.listen(conf.port, function() {
+server.listen(conf.port, () => {
   console.log('Listening on port ' + conf.port);
 });

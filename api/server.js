@@ -1,20 +1,20 @@
 'use strict';
-var AWS = require('aws-sdk'),
-  conf = require('./conf');
+import AWS from 'aws-sdk';
+import conf from './conf';
 
 AWS.config.apiVersions = { s3: '2006-03-01' };
 AWS.config.update({ region: conf.aws_region });
 
-var cookieParser = require('cookie-parser'),
-  express = require('express'),
-  routes = require('./routes');
+import cookieParser from 'cookie-parser';
+import express from 'express';
+import routes from './routes';
 
-var app = express();
+const app = express();
 
 app.use(
   '/api',
   cookieParser(),
-  function(req, res, next) {
+  (req, res, next) => {
     req.authenticated =
       req.cookies.user && req.cookies.user.id === conf.user_id;
     next();
@@ -23,4 +23,4 @@ app.use(
 );
 app.use(express.static('public'));
 
-module.exports = app;
+export default app;
