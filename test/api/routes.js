@@ -7,7 +7,7 @@ describe('routes', () => {
   function login(agent) {
     return agent.post('/api/login')
       .set('content-type', 'application/json')
-      .send({ loginToken: conf.login_token })
+      .send({ loginToken: conf.get('login_token') })
       .expect(204);
   }
 
@@ -53,7 +53,7 @@ describe('routes', () => {
       return login(agent).then(() =>
         agent.put('/api/activephonenumber')
           .set('content-type', 'application/json')
-          .send({ number: conf.jeffs_number })
+          .send({ number: conf.get('jeffs_number') })
           .expect(204)
       );
     });
@@ -77,7 +77,7 @@ describe('routes', () => {
     it('should return 401 if not logged in', () =>
       request(app).put('/api/activephonenumber')
         .set('content-type', 'application/json')
-        .send({ number: conf.jeffs_number })
+        .send({ number: conf.get('jeffs_number') })
         .expect(401)
     );
   });
@@ -93,9 +93,9 @@ describe('routes', () => {
           .expect(res =>
             res.body.numbers && res.body.numbers.length === 2 &&
               res.body.numbers[0].name === 'Jeff' &&
-              res.body.numbers[0].number === conf.jeffs_number &&
+              res.body.numbers[0].number === conf.get('jeffs_number') &&
               res.body.numbers[1].name === 'Brennen' &&
-              res.body.numbers[1].number === conf.brennens_number
+              res.body.numbers[1].number === conf.get('brennens_number')
           )
       );
     });
@@ -111,31 +111,31 @@ describe('routes', () => {
       return login(agent).then(() =>
         agent.put('/api/activephonenumber')
           .set('content-type', 'application/json')
-          .send({ number: conf.jeffs_number })
+          .send({ number: conf.get('jeffs_number') })
           .expect(204)
       ).then(() =>
         agent.get('/api/phonenumbers')
           .set('accept', 'application/json')
           .expect(200)
           .expect(res =>
-            res.body.numbers[0].number === conf.jeffs_number &&
+            res.body.numbers[0].number === conf.get('jeffs_number') &&
               res.body.numbers[0].active &&
-              res.body.numbers[1].number !== conf.jeffs_number &&
+              res.body.numbers[1].number !== conf.get('jeffs_number') &&
               !res.body.numbers[1].active
           )
       ).then(() =>
         agent.put('/api/activephonenumber')
           .set('content-type', 'application/json')
-          .send({ number: conf.brennens_number })
+          .send({ number: conf.get('brennens_number') })
           .expect(204)
       ).then(() =>
         agent.get('/api/phonenumbers')
           .set('accept', 'application/json')
           .expect(200)
           .expect(res =>
-            res.body.numbers[1].number === conf.brennens_number &&
+            res.body.numbers[1].number === conf.get('brennens_number') &&
               res.body.numbers[1].active &&
-              res.body.numbers[0].number !== conf.brennens_number &&
+              res.body.numbers[0].number !== conf.get('brennens_number') &&
               !res.body.numbers[0].active
           )
       );

@@ -2,6 +2,6 @@
 import conf from './conf';
 import server from './server';
 
-server.listen(conf.port, () => {
-  console.log('Listening on port ' + conf.port);
+server.listen(conf.get('port'), () => {
+  console.log('Listening on port ' + conf.get('port'));
 });

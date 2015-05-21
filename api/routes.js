@@ -1,5 +1,4 @@
 'use strict';
-import _ from 'lodash';
 import AWS from 'aws-sdk';
 import bodyParser from 'body-parser';
 import express from 'express';
@@ -16,8 +15,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/login', bodyParser.json(), (req, res) => {
-  if (req.body.loginToken === conf.login_token) {
-    res.cookie('user', {id: conf.user_id}, { httpOnly: true });
+  if (req.body.loginToken === conf.get('login_token')) {
+    res.cookie('user', {id: conf.get('user_id')}, { httpOnly: true });
     res.sendStatus(204);
   } else {
     res.sendStatus(401);
@@ -39,8 +38,10 @@ router.post('/logout', (req, res) => {
 
 router.put('/activephonenumber', bodyParser.json(), (req, res, next) => {
   if (
-    !req.body.number ||
-    !_.includes([conf.jeffs_number, conf.brennens_number], req.body.number)
+    !req.body.number || (
+      req.body.number !== conf.get('jeffs_number') &&
+      req.body.number !== conf.get('brennens_number')
+    )
   ) {
     res.sendStatus(400);
     return;
@@ -51,7 +52,7 @@ router.put('/activephonenumber', bodyParser.json(), (req, res, next) => {
     req.body.number +
     '</Dial></Response>';
   s3.putObject({
-    Bucket: conf.aws_s3_bucket,
+    Bucket: conf.get('aws_s3_bucket'),
     Key: 'number.xml',
     ACL: 'public-read',
     Body: xml,
@@ -67,7 +68,7 @@ router.put('/activephonenumber', bodyParser.json(), (req, res, next) => {
 
 router.get('/phonenumbers', (req, res, next) => {
   s3.getObject({
-    Bucket: conf.aws_s3_bucket,
+    Bucket: conf.get('aws_s3_bucket'),
     Key: 'number.xml'
   }, (err, data) => {
     if (err) {
@@ -87,12 +88,12 @@ router.get('/phonenumbers', (req, res, next) => {
       res.json({
         numbers: [{
           name: 'Jeff',
-          number: conf.jeffs_number,
-          active: number === conf.jeffs_number
+          number: conf.get('jeffs_number'),
+          active: number === conf.get('jeffs_number')
         }, {
           name: 'Brennen',
-          number: conf.brennens_number,
-          active: number === conf.brennens_number
+          number: conf.get('brennens_number'),
+          active: number === conf.get('brennens_number')
         }]
       });
     });

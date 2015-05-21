@@ -1,5 +1,5 @@
 'use strict';
-import _ from 'lodash';
+import Immutable from 'immutable';
 import React from 'react';
 import request from 'superagent';
 import Loading from './loading';
@@ -16,9 +16,10 @@ export default class extends React.Component {
           throw err;
         }
 
-        if (_.includes(res.body.actions, 'login')) {
+        const actions = Immutable.fromJS(res.body.actions);
+        if (actions.includes('login')) {
           this.setState({loading: false, needToLogin: true});
-        } else if (_.includes(res.body.actions, 'phonenumbers')) {
+        } else if (actions.includes('phonenumbers')) {
           this.setState({loading: false, needToLogin: false, phonenumbers: true});
         } else {
           throw new Error('Cannot load phone numbers');

@@ -16,7 +16,7 @@ app.use(
   cookieParser(),
   (req, res, next) => {
     req.authenticated =
-      req.cookies.user && req.cookies.user.id === conf.user_id;
+      req.cookies.user && req.cookies.user.id === conf.get('user_id');
     next();
   },
   routes

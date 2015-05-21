@@ -1,9 +1,10 @@
 'use strict';
+import Immutable from 'immutable';
 import rc from 'rc';
 
 /*eslint-disable camelcase */
 
-export default rc('number_switcher_3000', {
+export default Immutable.Map(rc('number_switcher_3000', {
   aws_region: 'us-east-1',
   aws_s3_bucket: 'number-switcher-3000-dev',
   brennens_number: '222-222-2223',
@@ -11,6 +12,6 @@ export default rc('number_switcher_3000', {
   login_token: 'login_token',
   port: '3000',
   user_id: 'user_id'
-});
+}));
 
 /*eslint-enable camelcase */
