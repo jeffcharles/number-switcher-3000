@@ -35,7 +35,7 @@ export default class extends React.Component {
           throw err;
         }
 
-        location.reload();
+        this.props.flux.getActions('actions').queryActions();
       });
   }
 
@@ -73,7 +73,7 @@ export default class extends React.Component {
                 </label>
               </div>
             )}
-            <button type="submit">Save</button> <button onClick={this.onLogout}>Logout</button>
+            <button type="submit">Save</button> <button onClick={this.onLogout.bind(this)}>Logout</button>
           </form>
         )}
       </div>
