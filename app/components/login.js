@@ -18,7 +18,7 @@ export default class extends React.Component {
           throw err;
         }
 
-        location.reload();
+        this.props.flux.getActions('actions').queryActions();
       });
   }
 
