@@ -1,7 +1,7 @@
 'use strict';
 import request from 'supertest-as-promised';
-import app from './../../dist/server';
-import conf from './../../dist/conf';
+import app from './../../api/server';
+import conf from './../../api/conf';
 
 describe('routes', () => {
   function login(agent) {

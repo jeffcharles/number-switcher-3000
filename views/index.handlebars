@@ -24,8 +24,8 @@
     <meta name="theme-color" content="#ffffff">
   </head>
   <body>
-    <div class="container" id="mount">
-    </div>
-    <script src="{%=o.htmlWebpackPlugin.files.chunks.main.entry%}"></script>
+    <div class="container" id="mount">{{{appString}}}</div>
+    <script>var appState = {{{appState}}};</script>
+    <script src="/bundle.js"></script>
   </body>
 </html>

@@ -1,25 +1,11 @@
 'use strict';
+import FluxComponent from 'flummox/component';
 import React from 'react';
-import request from 'superagent';
 
-export default class extends React.Component {
-  componentWillMount() {
-    this.setState({ loginToken: '' });
-  }
-
+class Login extends React.Component {
   onLogin(e) {
     e.preventDefault();
-
-    request.post('/api/login')
-      .set('content-type', 'application/json')
-      .send({ loginToken: this.state.loginToken })
-      .end(err => {
-        if (err) {
-          throw err;
-        }
-
-        this.props.flux.getActions('actions').queryActions();
-      });
+    this.props.flux.getActions('auth').login(this.state.loginToken);
   }
 
   onLoginTokenChange(e) {
@@ -41,5 +27,11 @@ export default class extends React.Component {
         </form>
       </div>
     );
+  }
+}
+
+export default class LoginWrapper extends React.Component {
+  render() {
+    return <FluxComponent><Login /></FluxComponent>;
   }
 }

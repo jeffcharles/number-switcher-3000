@@ -1,5 +1,4 @@
 'use strict';
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './app/index.js',
@@ -17,6 +16,5 @@ module.exports = {
       { test: /\.svg$/, loader: 'file-loader' }
     ]
   },
-  plugins: [new HtmlWebpackPlugin({ template: 'app/index.html' })],
   resolve: { root: __dirname }
 };
