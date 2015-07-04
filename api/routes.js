@@ -1,17 +1,13 @@
 'use strict';
-import AWS from 'aws-sdk';
 import bodyParser from 'body-parser';
 import express from 'express';
-import xml2js from 'xml2js';
 import conf from './conf';
-
-const s3 = new AWS.S3();
+import { getActions, getNumbers, s3 } from './utils';
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  const actions = req.authenticated ? ['logout', 'phonenumbers'] : ['login'];
-  res.json({ 'actions': actions });
+  res.json({ 'actions': getActions(req).toJS() });
 });
 
 router.post('/login', bodyParser.json(), (req, res) => {
@@ -67,37 +63,10 @@ router.put('/activephonenumber', bodyParser.json(), (req, res, next) => {
 });
 
 router.get('/phonenumbers', (req, res, next) => {
-  s3.getObject({
-    Bucket: conf.get('aws_s3_bucket'),
-    Key: 'number.xml'
-  }, (err, data) => {
-    if (err) {
-      next(err);
-      return;
-    }
-
-    xml2js.parseString(data.Body, {explicitRoot: true}, (err2, result) => {
-      if (err2) {
-        next(err2);
-        return;
-      }
-
-      const number =
-        result.Response && result.Response.Dial && result.Response.Dial[0];
-
-      res.json({
-        numbers: [{
-          name: 'Jeff',
-          number: conf.get('jeffs_number'),
-          active: number === conf.get('jeffs_number')
-        }, {
-          name: 'Brennen',
-          number: conf.get('brennens_number'),
-          active: number === conf.get('brennens_number')
-        }]
-      });
-    });
-  });
+  getNumbers()
+    .then(numbers => {
+      res.json({ numbers });
+    }).catch(next);
 });
 
 export default router;

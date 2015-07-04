@@ -5,9 +5,11 @@ import Loading from './loading';
 import Login from './login';
 import NumberPicker from './number-picker';
 
-export default class extends React.Component {
-  componentWillMount() {
-    this.props.flux.getActions('actions').queryActions();
+class App extends React.Component {
+  componentDidMount() {
+    if (this.props.actions.isEmpty()) {
+      this.props.flux.getActions('actions').queryActions();
+    }
   }
 
   render() {
@@ -15,12 +17,18 @@ export default class extends React.Component {
     if (this.props.actions.isEmpty()) {
       page = <Loading />;
     } else if (this.props.actions.includes('login')) {
-      page = <FluxComponent><Login /></FluxComponent>;
+      page = <Login />;
     } else if (this.props.actions.includes('phonenumbers')) {
-      page = <FluxComponent><NumberPicker /></FluxComponent>;
+      page = <NumberPicker />;
     } else {
       throw new Error('Unknown set of actions');
     }
     return page;
+  }
+}
+
+export default class AppWrapper extends React.Component {
+  render() {
+    return <FluxComponent connectToStores="actions"><App /></FluxComponent>;
   }
 }
