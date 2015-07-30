@@ -10,9 +10,9 @@
     "build": "webpack -p && npm run build:assets",
     "build:assets": "cp app/robots.txt public/robots.txt && cp -R app/favicons/* public",
     "build:dev": "webpack -d && npm run build:assets",
-    "start": "forever --minUptime 1000 api/index.js",
+    "start": "node api/index.js",
     "test": "eslint . && npm run build:dev && mocha --compilers js:babel/register test/**/*.js",
-    "watch": "forever --minUptime 1000 -w --watchDirectory api api/index.js & (npm run build:assets && webpack -d --watch)"
+    "watch": "pm2-dev run api/index.js & (npm run build:assets && webpack -d --watch)"
   },
   "author": "Jeffrey Charles <jeffreycharles@beyondtechnicallycorrect.com>",
   "license": "BSD-2-Clause",
@@ -31,6 +31,7 @@
     "less-loader": "^2.2.0",
     "mocha": "^2.2.5",
     "node-libs-browser": "^0.5.0",
+    "pm2": "^0.14.5",
     "style-loader": "^0.12.2",
     "supertest": "^1.0.1",
     "supertest-as-promised": "^2.0.1",
@@ -47,7 +48,6 @@
     "express": "^4.12.3",
     "express-handlebars": "^2.0.1",
     "flummox": "^3.5.2",
-    "forever": "^0.14.1",
     "immutable": "^3.7.4",
     "rc": "^1.0.1",
     "react": "^0.13.3",
