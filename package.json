@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "An app for dealing with dial-in systems",
   "engine": {
-    "node": "0.12.3",
     "npm": "^2.13.2"
   },
   "scripts": {
