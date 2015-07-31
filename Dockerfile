@@ -1,4 +1,4 @@
-FROM node:0.12.2-slim
+FROM iojs:2.5.0-slim
 MAINTAINER Jeffrey Charles <jeffreycharles@beyondtechnicallycorrect.com>
 
 COPY . /usr/src/node
