@@ -4,7 +4,7 @@
   "description": "An app for dealing with dial-in systems",
   "engine": {
     "node": "0.12.3",
-    "npm": "^2.10.0"
+    "npm": "^2.13.2"
   },
   "scripts": {
     "build": "webpack -p && npm run build:assets",
