@@ -1,6 +1,7 @@
 'use strict';
 import AWS from 'aws-sdk';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import exphbs from 'express-handlebars';
 import express from 'express';
 import FluxComponent from 'flummox/component';
@@ -24,6 +25,8 @@ app.use((req, res, next) => {
     req.cookies.user && req.cookies.user.id === conf.get('user_id');
   next();
 });
+
+app.use(compression());
 
 app.use('/api', routes);
 app.use(express.static('public'));
