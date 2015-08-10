@@ -80,7 +80,7 @@ class NumberPicker extends React.Component {
                 </label>
               </div>
             )}
-            <button type="submit">Save</button> <button onClick={this.onLogout.bind(this)} type="button">Logout</button>
+            <button disabled={this.props.isSaving} type="submit">{this.props.isSaving ? 'Saving' : 'Save'}</button> <button onClick={this.onLogout.bind(this)} type="button">Logout</button>
           </form>
         )}
       </div>
