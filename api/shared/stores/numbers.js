@@ -10,7 +10,7 @@ export default class extends Store {
     this.register(actionIds.queryNumbers, this.onQueryNumbers);
     this.registerAsync(
       actionIds.updateNumber,
-      null,
+      this.onUpdateNumberStarted,
       this.onUpdateNumberSuccess,
       this.onUpdateNumberFailed
     );
@@ -43,13 +43,19 @@ export default class extends Store {
 
   onUpdateNumberFailed(err) {
     this.setState({
+      isSaving: false,
       saveError: err,
       saved: false
     });
   }
 
+  onUpdateNumberStarted() {
+    this.setState({ isSaving: true });
+  }
+
   onUpdateNumberSuccess(number) {
     this.setState({
+      isSaving: false,
       numbers: this.state.numbers.map(
         n => n.set('active', n.get('number') === number)
       ),
