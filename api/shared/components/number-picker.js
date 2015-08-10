@@ -1,5 +1,5 @@
 'use strict';
-import { Alert } from 'react-bootstrap';
+import Alert from 'react-bootstrap/lib/Alert';
 import FluxComponent from 'flummox/component';
 import React from 'react';
 import Loading from './loading';
