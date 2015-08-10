@@ -6,8 +6,14 @@ export default class extends Store {
   constructor(flux) {
     super();
     const actionIds = flux.getActionIds('numbers');
+    this.register(actionIds.dismissAlert, this.onDismissAlert);
     this.register(actionIds.queryNumbers, this.onQueryNumbers);
-    this.register(actionIds.updateNumber, this.onUpdateNumber);
+    this.registerAsync(
+      actionIds.updateNumber,
+      null,
+      this.onUpdateNumberSuccess,
+      this.onUpdateNumberFailed
+    );
     this.state = { numbers: Immutable.fromJS([]) };
   }
 
@@ -24,15 +30,30 @@ export default class extends Store {
     return JSON.stringify(state);
   }
 
+  onDismissAlert() {
+    this.setState({
+      saveError: null,
+      saved: null
+    });
+  }
+
   onQueryNumbers(numbers) {
     this.setState({ numbers });
   }
 
-  onUpdateNumber(number) {
+  onUpdateNumberFailed(err) {
+    this.setState({
+      saveError: err,
+      saved: false
+    });
+  }
+
+  onUpdateNumberSuccess(number) {
     this.setState({
       numbers: this.state.numbers.map(
         n => n.set('active', n.get('number') === number)
-      )
+      ),
+      saved: true
     });
   }
 }
