@@ -4,6 +4,10 @@ import Immutable from 'immutable';
 import request from 'superagent';
 
 export default class extends Actions {
+  dismissAlert() {
+    return true;
+  }
+
   queryNumbers() {
     return new Promise((resolve, reject) => {
       request.get('/api/phonenumbers')

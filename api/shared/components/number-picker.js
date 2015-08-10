@@ -1,4 +1,5 @@
 'use strict';
+import { Alert } from 'react-bootstrap';
 import FluxComponent from 'flummox/component';
 import React from 'react';
 import Loading from './loading';
@@ -38,9 +39,32 @@ class NumberPicker extends React.Component {
   }
 
   render() {
+    let savedSuccessfully;
+    if (this.props.saved) {
+      savedSuccessfully = (
+        <Alert
+          bsStyle="success"
+          dismissAfter={2000}
+          onDismiss={this.props.flux.getActions('numbers').dismissAlert}>
+          Saved successfully
+        </Alert>
+      );
+    }
+    let saveError;
+    if (this.props.saveError) {
+      saveError = (
+        <Alert
+          bsStyle="danger"
+          onDismiss={this.props.flux.getActions('numbers').dismissAlert}>
+          {this.props.saveError.message || this.props.saveError}
+        </Alert>
+      );
+    }
     return (
       <div>
         <h1>Pick the number</h1>
+        {savedSuccessfully}
+        {saveError}
         {this.props.numbers.isEmpty() ?
           <Loading /> : (
           <form onSubmit={this.onUpdateNumber.bind(this)}>
