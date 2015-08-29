@@ -19,7 +19,7 @@ export default class extends Store {
 
   static deserialize(state) {
     const parsedState = JSON.parse(state);
-    let deserializedState = {};
+    const deserializedState = {};
     Object.keys(parsedState).forEach(k =>
       deserializedState[k] = Immutable.fromJS(parsedState[k])
     );

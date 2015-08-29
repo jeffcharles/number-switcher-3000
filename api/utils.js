@@ -24,7 +24,7 @@ export function getNumbers() {
         resolve(data);
       }
     });
-  }).then(data => new Promise(function(resolve, reject) {
+  }).then(data => new Promise((resolve, reject) => {
     xml2js.parseString(data.Body, { explictRoot: true }, (err, result) => {
       if (err) {
         reject(err);
