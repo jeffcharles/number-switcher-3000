@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 
 router.post('/login', bodyParser.json(), (req, res) => {
   if (req.body.loginToken === conf.get('login_token')) {
-    res.cookie('user', {id: conf.get('user_id')}, { httpOnly: true });
+    res.cookie('user', { id: conf.get('user_id') }, { httpOnly: true });
     res.sendStatus(204);
   } else {
     res.sendStatus(401);
@@ -22,9 +22,9 @@ router.post('/login', bodyParser.json(), (req, res) => {
 router.use((req, res, next) => {
   if (!req.authenticated) {
     res.sendStatus(401);
-  } else {
-    next();
+    return;
   }
+  next();
 });
 
 router.post('/logout', (req, res) => {
@@ -44,9 +44,8 @@ router.put('/activephonenumber', bodyParser.json(), (req, res, next) => {
   }
 
   const xml =
-    '<?xml version="1.0" encoding="UTF-8"?><Response><Dial>' +
-    req.body.number +
-    '</Dial></Response>';
+    `<?xml version="1.0" encoding="UTF-8"?>
+    <Response><Dial>${req.body.number}</Dial></Response>`;
   s3.putObject({
     Bucket: conf.get('aws_s3_bucket'),
     Key: 'number.xml',

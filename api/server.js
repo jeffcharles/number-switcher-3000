@@ -16,7 +16,7 @@ import Flux from './flux';
 import routes from './routes';
 
 const app = express();
-app.engine('handlebars', exphbs({defaultLayout: null}));
+app.engine('handlebars', exphbs({ defaultLayout: null }));
 app.set('view engine', 'handlebars');
 
 app.use(cookieParser());

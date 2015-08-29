@@ -2,7 +2,7 @@
 import Immutable from 'immutable';
 import rc from 'rc';
 
-/*eslint-disable camelcase */
+/* eslint-disable camelcase */
 
 export default Immutable.Map(rc('number_switcher_3000', {
   aws_region: 'us-east-1',
@@ -14,4 +14,4 @@ export default Immutable.Map(rc('number_switcher_3000', {
   user_id: 'user_id'
 }));
 
-/*eslint-enable camelcase */
+/* eslint-enable camelcase */

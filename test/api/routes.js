@@ -42,7 +42,7 @@ describe('routes', () => {
         agent.get('/api')
           .expect(200)
           .expect('content-type', /json/)
-          .expect({actions: ['login']})
+          .expect({ actions: ['login'] })
       );
     });
   });
@@ -63,7 +63,7 @@ describe('routes', () => {
       { number: 'foo' },
       { number: '222-222-2224' }
     ].forEach(body => {
-      it('should return 400 if invalid ' + JSON.stringify(body), () => {
+      it(`should return 400 if invalid ${JSON.stringify(body)}`, () => {
         const agent = request.agent(app);
         return login(agent).then(() =>
           agent.put('/api/activephonenumber')
