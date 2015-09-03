@@ -21,7 +21,7 @@ export default class extends Actions {
     return new Promise((resolve, reject) => {
       request.post('/api/login')
         .set('content-type', 'application/json')
-        .send({ loginToken: loginToken })
+        .send({ loginToken })
         .end(err => {
           if (err) {
             reject(err);
