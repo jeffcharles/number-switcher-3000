@@ -1,14 +1,15 @@
 'use strict';
-import FluxComponent from 'flummox/component';
 import React from 'react';
+import { connect } from 'react-redux';
 import Loading from './loading';
 import Login from './login';
 import NumberPicker from './number-picker';
+import { queryActions } from './../actions/auth';
 
 class App extends React.Component {
   componentDidMount() {
     if (this.props.actions.isEmpty()) {
-      this.props.flux.getActions('actions').queryActions();
+      this.props.dispatch(queryActions());
     }
   }
 
@@ -27,8 +28,4 @@ class App extends React.Component {
   }
 }
 
-export default class AppWrapper extends React.Component {
-  render() {
-    return <FluxComponent connectToStores="actions"><App /></FluxComponent>;
-  }
-}
+export default connect(state => ({ actions: state.auth.get('actions') }))(App);
