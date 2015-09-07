@@ -24,11 +24,11 @@ class Login extends React.Component {
               onChange={this.onLoginTokenChange.bind(this)}
               type="text" value={this.loginToken} />
           </div>
-          <button type="submit">Login</button>
+          <button disabled={this.props.isLoggingIn} type="submit">{this.props.isLoggingIn ? 'Logging In' : 'Login'}</button>
         </form>
       </div>
     );
   }
 }
 
-export default connect(() => ({}))(Login);
+export default connect(state => ({ isLoggingIn: state.auth.get('isLoggingIn') }))(Login);

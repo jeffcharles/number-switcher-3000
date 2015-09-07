@@ -82,7 +82,7 @@ class NumberPicker extends React.Component {
                 </label>
               </div>
             )}
-            <button disabled={this.props.isSaving} type="submit">{this.props.isSaving ? 'Saving' : 'Save'}</button> <button onClick={this.onLogout.bind(this)} type="button">Logout</button>
+            <button disabled={this.props.isSaving} type="submit">{this.props.isSaving ? 'Saving' : 'Save'}</button> <button disabled={this.props.isLoggingOut} onClick={this.onLogout.bind(this)} type="button">{this.props.isLoggingOut ? 'Logging out' : 'Logout'}</button>
           </form>
         )}
       </div>
@@ -91,6 +91,7 @@ class NumberPicker extends React.Component {
 }
 
 export default connect(state => ({
+  isLoggingOut: state.auth.get('isLoggingOut'),
   numbers: state.numbers.get('numbers'),
   isSaving: state.numbers.get('isSaving'),
   saved: state.numbers.get('saved'),
