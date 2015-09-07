@@ -2,16 +2,19 @@
 'use strict';
 require('./index.less');
 
-import FluxComponent from 'flummox/component';
+import Immutable from 'immutable';
 import React from 'react';
+import { Provider } from 'react-redux';
 import App from './../api/shared/components/app';
-import Flux from './flux';
+import createStore from './../api/shared/store';
 
-const flux = new Flux();
-flux.deserialize(JSON.stringify(appState));
+const store = createStore({
+  auth: Immutable.fromJS(appState.auth),
+  numbers: Immutable.fromJS(appState.numbers)
+});
 React.render(
-  <FluxComponent flux={flux}>
-    <App />
-  </FluxComponent>,
+  <Provider store={store}>
+    {() => <App />}
+  </Provider>,
   document.getElementById('mount')
 );

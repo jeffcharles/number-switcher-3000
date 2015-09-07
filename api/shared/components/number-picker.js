@@ -1,7 +1,9 @@
 'use strict';
 import Alert from 'react-bootstrap/lib/Alert';
-import FluxComponent from 'flummox/component';
 import React from 'react';
+import { connect } from 'react-redux';
+import { logout } from './../actions/auth';
+import { dismissAlert, queryNumbers, updateNumber } from './../actions/numbers';
 import Loading from './loading';
 
 class NumberPicker extends React.Component {
@@ -12,7 +14,7 @@ class NumberPicker extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       if (this.props.numbers.isEmpty()) {
-        this.props.flux.getActions('numbers').queryNumbers();
+        this.props.dispatch(queryNumbers());
       }
     }, 0);
   }
@@ -22,7 +24,7 @@ class NumberPicker extends React.Component {
   }
 
   onLogout() {
-    this.props.flux.getActions('auth').logout();
+    this.props.dispatch(logout());
   }
 
   onUpdateNumber(e) {
@@ -35,7 +37,7 @@ class NumberPicker extends React.Component {
     if (!activeNumber) {
       throw new Error('Need to select number');
     }
-    this.props.flux.getActions('numbers').updateNumber(activeNumber);
+    this.props.dispatch(updateNumber(activeNumber));
   }
 
   render() {
@@ -45,7 +47,7 @@ class NumberPicker extends React.Component {
         <Alert
           bsStyle="success"
           dismissAfter={2000}
-          onDismiss={this.props.flux.getActions('numbers').dismissAlert}>
+          onDismiss={() => this.props.dispatch(dismissAlert())}>
           Saved successfully
         </Alert>
       );
@@ -55,7 +57,7 @@ class NumberPicker extends React.Component {
       saveError = (
         <Alert
           bsStyle="danger"
-          onDismiss={this.props.flux.getActions('numbers').dismissAlert}>
+          onDismiss={() => this.props.dispatch(dismissAlert())}>
           {this.props.saveError.message || this.props.saveError}
         </Alert>
       );
@@ -88,10 +90,9 @@ class NumberPicker extends React.Component {
   }
 }
 
-export default class NumberPickerWrapper extends React.Component {
-  render() {
-    return (
-      <FluxComponent connectToStores="numbers"><NumberPicker /></FluxComponent>
-    );
-  }
-}
+export default connect(state => ({
+  numbers: state.numbers.get('numbers'),
+  isSaving: state.numbers.get('isSaving'),
+  saved: state.numbers.get('saved'),
+  saveError: state.numbers.get('saveError')
+}))(NumberPicker);

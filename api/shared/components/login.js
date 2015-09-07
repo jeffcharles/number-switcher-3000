@@ -1,11 +1,12 @@
 'use strict';
-import FluxComponent from 'flummox/component';
 import React from 'react';
+import { connect } from 'react-redux';
+import { login } from './../actions/auth';
 
 class Login extends React.Component {
   onLogin(e) {
     e.preventDefault();
-    this.props.flux.getActions('auth').login(this.state.loginToken);
+    this.props.dispatch(login(this.state.loginToken));
   }
 
   onLoginTokenChange(e) {
@@ -30,8 +31,4 @@ class Login extends React.Component {
   }
 }
 
-export default class LoginWrapper extends React.Component {
-  render() {
-    return <FluxComponent><Login /></FluxComponent>;
-  }
-}
+export default connect(() => ({}))(Login);
