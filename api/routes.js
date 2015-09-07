@@ -7,12 +7,12 @@ import { getActions, getNumbers, s3 } from './utils';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.json({ 'actions': getActions(req).toJS() });
+  res.json({ 'actions': getActions(req) });
 });
 
 router.post('/login', bodyParser.json(), (req, res) => {
-  if (req.body.loginToken === conf.get('login_token')) {
-    res.cookie('user', { id: conf.get('user_id') }, { httpOnly: true });
+  if (req.body.loginToken === conf.login_token) {
+    res.cookie('user', { id: conf.user_id }, { httpOnly: true });
     res.sendStatus(204);
   } else {
     res.sendStatus(401);
@@ -35,8 +35,8 @@ router.post('/logout', (req, res) => {
 router.put('/activephonenumber', bodyParser.json(), (req, res, next) => {
   if (
     !req.body.number || (
-      req.body.number !== conf.get('jeffs_number') &&
-      req.body.number !== conf.get('brennens_number')
+      req.body.number !== conf.jeffs_number &&
+      req.body.number !== conf.brennens_number
     )
   ) {
     res.sendStatus(400);
@@ -47,7 +47,7 @@ router.put('/activephonenumber', bodyParser.json(), (req, res, next) => {
     `<?xml version="1.0" encoding="UTF-8"?>
     <Response><Dial>${req.body.number}</Dial></Response>`;
   s3.putObject({
-    Bucket: conf.get('aws_s3_bucket'),
+    Bucket: conf.aws_s3_bucket,
     Key: 'number.xml',
     ACL: 'public-read',
     Body: xml,
