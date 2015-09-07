@@ -2,13 +2,6 @@
 import Immutable from 'immutable';
 import request from 'superagent';
 
-export const DISMISS_ALERT = 'DISMISS_ALERT';
-export function dismissAlert() {
-  return {
-    type: DISMISS_ALERT
-  };
-}
-
 export const QUERY_NUMBERS_ATTEMPT = 'QUERY_NUMBERS_ATTEMPT';
 function queryNumbersAttempt() {
   return {

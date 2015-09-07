@@ -3,7 +3,9 @@ import Alert from 'react-bootstrap/lib/Alert';
 import React from 'react';
 import { connect } from 'react-redux';
 import { logout } from './../actions/auth';
-import { dismissAlert, queryNumbers, updateNumber } from './../actions/numbers';
+import { dismissAlert } from './../actions/alert';
+import { queryNumbers, updateNumber } from './../actions/numbers';
+import ErrorAlert from './error-alert';
 import Loading from './loading';
 
 class NumberPicker extends React.Component {
@@ -17,6 +19,18 @@ class NumberPicker extends React.Component {
         this.props.dispatch(queryNumbers());
       }
     }, 0);
+  }
+
+  getErrorAlert(err) {
+    let alert;
+    if (err) {
+      alert = (
+        <ErrorAlert
+          error={err}
+          onDismiss={() => this.props.dispatch(dismissAlert())} />
+      );
+    }
+    return alert;
   }
 
   onActiveNumberChange(e) {
@@ -52,21 +66,12 @@ class NumberPicker extends React.Component {
         </Alert>
       );
     }
-    let error;
-    if (this.props.error) {
-      error = (
-        <Alert
-          bsStyle="danger"
-          onDismiss={() => this.props.dispatch(dismissAlert())}>
-          {this.props.error.message || this.props.error}
-        </Alert>
-      );
-    }
     return (
       <div>
         <h1>Pick the number</h1>
         {savedSuccessfully}
-        {error}
+        {this.getErrorAlert(this.props.authError)}
+        {this.getErrorAlert(this.props.numberError)}
         {this.props.numbers.isEmpty() ?
           <Loading /> : (
           <form onSubmit={this.onUpdateNumber.bind(this)}>
@@ -91,9 +96,10 @@ class NumberPicker extends React.Component {
 }
 
 export default connect(state => ({
+  authError: state.auth.get('error'),
   isLoggingOut: state.auth.get('isLoggingOut'),
   numbers: state.numbers.get('numbers'),
   isSaving: state.numbers.get('isSaving'),
   saved: state.numbers.get('saved'),
-  error: state.numbers.get('error')
+  numberError: state.numbers.get('error')
 }))(NumberPicker);
