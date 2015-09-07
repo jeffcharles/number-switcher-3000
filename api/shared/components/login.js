@@ -1,7 +1,9 @@
 'use strict';
 import React from 'react';
 import { connect } from 'react-redux';
+import { dismissAlert } from './../actions/alert';
 import { login } from './../actions/auth';
+import ErrorAlert from './error-alert';
 
 class Login extends React.Component {
   onLogin(e) {
@@ -14,9 +16,18 @@ class Login extends React.Component {
   }
 
   render() {
+    let error;
+    if (this.props.error) {
+      error = (
+        <ErrorAlert
+          error={this.props.error}
+          onDismiss={() => this.props.dispatch(dismissAlert())} />
+      );
+    }
     return (
       <div>
         <h1>Login</h1>
+        {error}
         <form onSubmit={this.onLogin.bind(this)}>
           <div>
             <label htmlFor="loginToken">Login token</label>
@@ -31,4 +42,7 @@ class Login extends React.Component {
   }
 }
 
-export default connect(state => ({ isLoggingIn: state.auth.get('isLoggingIn') }))(Login);
+export default connect(state => ({
+  error: state.auth.get('error'),
+  isLoggingIn: state.auth.get('isLoggingIn')
+}))(Login);

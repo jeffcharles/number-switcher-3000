@@ -1,6 +1,7 @@
 'use strict';
 import Immutable from 'immutable';
-import { DISMISS_ALERT, QUERY_NUMBERS_SUCCESS, QUERY_NUMBERS_FAIL, UPDATE_NUMBER_ATTEMPT, UPDATE_NUMBER_SUCCESS, UPDATE_NUMBER_FAIL } from './../actions/numbers';
+import { DISMISS_ALERT } from './../actions/alert';
+import { QUERY_NUMBERS_SUCCESS, QUERY_NUMBERS_FAIL, UPDATE_NUMBER_ATTEMPT, UPDATE_NUMBER_SUCCESS, UPDATE_NUMBER_FAIL } from './../actions/numbers';
 
 export default function(state = Immutable.fromJS({}), action) {
   switch (action.type) {
