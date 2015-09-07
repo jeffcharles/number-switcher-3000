@@ -52,13 +52,13 @@ class NumberPicker extends React.Component {
         </Alert>
       );
     }
-    let saveError;
-    if (this.props.saveError) {
-      saveError = (
+    let error;
+    if (this.props.error) {
+      error = (
         <Alert
           bsStyle="danger"
           onDismiss={() => this.props.dispatch(dismissAlert())}>
-          {this.props.saveError.message || this.props.saveError}
+          {this.props.error.message || this.props.error}
         </Alert>
       );
     }
@@ -66,7 +66,7 @@ class NumberPicker extends React.Component {
       <div>
         <h1>Pick the number</h1>
         {savedSuccessfully}
-        {saveError}
+        {error}
         {this.props.numbers.isEmpty() ?
           <Loading /> : (
           <form onSubmit={this.onUpdateNumber.bind(this)}>
@@ -94,5 +94,5 @@ export default connect(state => ({
   numbers: state.numbers.get('numbers'),
   isSaving: state.numbers.get('isSaving'),
   saved: state.numbers.get('saved'),
-  saveError: state.numbers.get('saveError')
+  error: state.numbers.get('error')
 }))(NumberPicker);
