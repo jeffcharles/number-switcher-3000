@@ -23,8 +23,7 @@ app.set('view engine', 'handlebars');
 
 app.use(cookieParser());
 app.use((req, res, next) => {
-  req.authenticated =
-    req.cookies.user && req.cookies.user.id === conf.get('user_id');
+  req.authenticated = req.cookies.user && req.cookies.user.id === conf.user_id;
   next();
 });
 
@@ -34,9 +33,7 @@ app.use('/api', routes);
 app.use(express.static('public'));
 app.use('/', (req, res, next) => {
   const actions = getActions(req);
-  const numbersPromise = req.authenticated ?
-    getNumbers() :
-    Promise.resolve(Immutable.fromJS([]));
+  const numbersPromise = req.authenticated ? getNumbers() : Promise.resolve([]);
   numbersPromise.then(numbers => {
     const appState = {
       auth: Immutable.fromJS({ actions }),
