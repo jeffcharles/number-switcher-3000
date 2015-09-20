@@ -30,8 +30,10 @@ export function getNumbers() {
       }
     });
   })).then(result => {
-    const number =
-      result.Response && result.Response.Dial && result.Response.Dial[0];
+    const number = result.Response && (
+      (result.Response.Dial && result.Response.Dial[0]) ||
+      (result.Response.Play && 'auto-dial-in')
+    );
     return [{
       name: 'Jeff',
       number: conf.jeffs_number,
@@ -40,6 +42,10 @@ export function getNumbers() {
       name: 'Brennen',
       number: conf.brennens_number,
       active: number === conf.brennens_number
+    }, {
+      name: 'Auto Dial-in',
+      number: 'auto-dial-in',
+      active: number === 'auto-dial-in'
     }];
   });
 }
