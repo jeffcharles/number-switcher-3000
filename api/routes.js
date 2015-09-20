@@ -36,16 +36,19 @@ router.put('/activephonenumber', bodyParser.json(), (req, res, next) => {
   if (
     !req.body.number || (
       req.body.number !== conf.jeffs_number &&
-      req.body.number !== conf.brennens_number
+      req.body.number !== conf.brennens_number &&
+      req.body.number !== 'auto-dial-in'
     )
   ) {
     res.sendStatus(400);
     return;
   }
 
-  const xml =
+  const xml = req.body.number !== 'auto-dial-in' ?
     `<?xml version="1.0" encoding="UTF-8"?>
-    <Response><Dial>${req.body.number}</Dial></Response>`;
+    <Response><Dial>${req.body.number}</Dial></Response>` :
+    `<?xml version="1.0" encoding="UTF-8"?>
+    <Response><Play digits="9"></Play></Response>`;
   s3.putObject({
     Bucket: conf.aws_s3_bucket,
     Key: 'number.xml',

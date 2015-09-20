@@ -48,12 +48,22 @@ describe('routes', () => {
   });
 
   describe('/activephonenumber', () => {
-    it('should return 204 if valid', () => {
+    it('should return 204 if valid phonenumber', () => {
       const agent = request.agent(app);
       return login(agent).then(() =>
         agent.put('/api/activephonenumber')
           .set('content-type', 'application/json')
           .send({ number: conf.jeffs_number })
+          .expect(204)
+      );
+    });
+
+    it('should return 204 if auto-dial-in', () => {
+      const agent = request.agent(app);
+      return login(agent).then(() =>
+        agent.put('/api/activephonenumber')
+          .set('content-type', 'application/json')
+          .send({ number: 'auto-dial-in' })
           .expect(204)
       );
     });
@@ -91,11 +101,13 @@ describe('routes', () => {
           .expect(200)
           .expect('content-type', /json/)
           .expect(res =>
-            res.body.numbers && res.body.numbers.length === 2 &&
+            res.body.numbers && res.body.numbers.length === 3 &&
               res.body.numbers[0].name === 'Jeff' &&
               res.body.numbers[0].number === conf.jeffs_number &&
               res.body.numbers[1].name === 'Brennen' &&
-              res.body.numbers[1].number === conf.brennens_number
+              res.body.numbers[1].number === conf.brennens_number &&
+              res.body.numbers[2].name === 'Auto dial-in' &&
+              res.body.numbers[2].number === 'auto-dial-in'
           )
       );
     });
@@ -120,8 +132,10 @@ describe('routes', () => {
           .expect(res =>
             res.body.numbers[0].number === conf.jeffs_number &&
               res.body.numbers[0].active &&
-              res.body.numbers[1].number !== conf.jeffs_number &&
-              !res.body.numbers[1].active
+              res.body.numbers[1].number === conf.brennens_number &&
+              !res.body.numbers[1].active &&
+              res.body.numbers[2].number === 'auto-dial-in' &&
+              !res.body.numbers[2].active
           )
       ).then(() =>
         agent.put('/api/activephonenumber')
@@ -135,8 +149,27 @@ describe('routes', () => {
           .expect(res =>
             res.body.numbers[1].number === conf.brennens_number &&
               res.body.numbers[1].active &&
-              res.body.numbers[0].number !== conf.brennens_number &&
-              !res.body.numbers[0].active
+              res.body.numbers[0].number === conf.jeffs_number &&
+              !res.body.numbers[0].active &&
+              res.body.numbers[2].number === 'auto-dial-in' &&
+              !res.body.numbers[2].active
+          )
+      ).then(() =>
+        agent.put('/api/activephonenumber')
+          .set('content-type', 'application/json')
+          .send({ number: 'auto-dial-in' })
+          .expect(204)
+      ).then(() =>
+        agent.get('/api/phonenumbers')
+          .set('accept', 'application/json')
+          .expect(200)
+          .expect(res =>
+            res.body.numbers[2].number === 'auto-dial-in' &&
+              res.body.numbers[2].active &&
+              res.body.numbers[0].number === conf.jeffs_number &&
+              !res.body.numbers[0].active &&
+              res.body.numbers[1].number === conf.brennens_number &&
+              !res.body.numbers[1].active
           )
       );
     });
