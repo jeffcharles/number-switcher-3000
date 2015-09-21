@@ -118,7 +118,8 @@ describe('routes', () => {
         .expect(401)
     );
 
-    it('should list which number is active', () => {
+    it('should list which number is active', function() {
+      this.timeout(5000); // eslint-disable-line no-invalid-this
       const agent = request.agent(app);
       return login(agent).then(() =>
         agent.put('/api/activephonenumber')
