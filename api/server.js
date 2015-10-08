@@ -6,6 +6,7 @@ import exphbs from 'express-handlebars';
 import express from 'express';
 import Immutable from 'immutable';
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import App from './shared/components/app';
 import createStore from './shared/store';
@@ -40,9 +41,9 @@ app.use('/', (req, res, next) => {
       numbers: Immutable.fromJS({ numbers })
     };
     const store = createStore(appState);
-    const appString = React.renderToString(
+    const appString = ReactDOMServer.renderToString(
       <Provider store={store}>
-        {() => <App />}
+        <App />
       </Provider>
     );
     res.render('index', { appString, appState: JSON.stringify(appState) });
