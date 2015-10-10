@@ -1,0 +1,9 @@
+machine:
+  node:
+    version: v4.1.2
+deployment:
+  production:
+    owner: jeffcharles
+    branch: master
+    commands:
+      - ./deploy.sh
