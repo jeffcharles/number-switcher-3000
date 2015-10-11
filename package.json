@@ -9,9 +9,11 @@
     "build": "webpack -p && npm run build:assets",
     "build:assets": "cp app/robots.txt public/robots.txt && cp -R app/favicons/* public",
     "build:dev": "webpack -d && npm run build:assets",
+    "ci": "npm run lint && npm run build:dev && npm run test",
+    "lint": "eslint .",
     "preinstall": "npm prune",
     "start": "node api/index.js",
-    "test": "eslint . && npm run build:dev && mocha --compilers js:babel/register test/**/*.js",
+    "test": "mocha --compilers js:babel/register test/**/*.js",
     "watch": "pm2-dev run api/index.js & (npm run build:assets && webpack -d --watch)"
   },
   "author": "Jeffrey Charles <jeffreycharles@beyondtechnicallycorrect.com>",
