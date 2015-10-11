@@ -14,7 +14,7 @@ docker push jeffreycharles/number-switcher-3000
 cat << EOF > Dockerrun.aws.json
 {
   "AWSEBDockerrunVersion": "1",
-  "Image": "jeffreycharles/number-switcher-3000:${VERSION}",
+  "Image": { "Name": "jeffreycharles/number-switcher-3000:${VERSION}" },
   "Ports": [{ "ContainerPort": "3000" }]
 }
 EOF
