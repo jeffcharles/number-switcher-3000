@@ -2,10 +2,10 @@
 
 set -euo pipefail
 
+AWS_DEFAULT_REGION=us-east-1
 VERSION=circle-${CIRCLE_SHA1}-$(date +%s)
 ARCHIVE=${VERSION}.zip
 
-pip install awscli
 git archive HEAD --format=zip > $ARCHIVE
 aws s3 cp $ARCHIVE s3://number-switcher-3000-deployments/${ARCHIVE}
 aws elasticbeanstalk create-application-version \
