@@ -2,16 +2,10 @@
 import request from 'supertest-as-promised';
 import app from './../../api/server';
 import conf from './../../api/conf';
+import { login } from './helpers';
 
 describe('routes', () => {
-  function login(agent) {
-    return agent.post('/api/login')
-      .set('content-type', 'application/json')
-      .send({ loginToken: conf.login_token })
-      .expect(204);
-  }
-
-  describe('/', () => {
+  describe('/api', () => {
     it('should list login when not logged in', () =>
       request(app).get('/api')
         .set('accept', 'application/json')
@@ -32,7 +26,7 @@ describe('routes', () => {
     });
   });
 
-  describe('/logout', () => {
+  describe('/api/logout', () => {
     it('should log the user out', () => {
       const agent = request.agent(app);
       return login(agent).then(() =>
@@ -47,7 +41,7 @@ describe('routes', () => {
     });
   });
 
-  describe('/activephonenumber', () => {
+  describe('/api/activephonenumber', () => {
     it('should return 204 if valid phonenumber', () => {
       const agent = request.agent(app);
       return login(agent).then(() =>
@@ -92,7 +86,7 @@ describe('routes', () => {
     );
   });
 
-  describe('/phonenumbers', () => {
+  describe('/api/phonenumbers', () => {
     it('should return a list of phone numbers when logged in', () => {
       const agent = request.agent(app);
       return login(agent).then(() =>

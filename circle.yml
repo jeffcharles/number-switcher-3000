@@ -3,6 +3,9 @@ machine:
     version: v4.1.2
   services:
     - docker
+test:
+  override:
+    - npm run ci
 deployment:
   production:
     owner: jeffcharles
