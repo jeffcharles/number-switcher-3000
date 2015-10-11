@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-AWS_DEFAULT_REGION=us-east-1
+export AWS_DEFAULT_REGION=us-east-1
 VERSION=circle-${CIRCLE_SHA1}-$(date +%s)
 ARCHIVE=${VERSION}.zip
 
