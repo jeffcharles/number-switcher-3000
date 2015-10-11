@@ -4,7 +4,7 @@ set -euo pipefail
 
 export AWS_DEFAULT_REGION=us-east-1
 
-VERSION=circle-${CIRCLE_SHA1}-$(date +%s)
+VERSION=circle-$(date +%s)-${CIRCLE_SHA1}
 ARCHIVE=${VERSION}.zip
 
 docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
