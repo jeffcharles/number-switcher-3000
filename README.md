@@ -1,6 +1,6 @@
 # Let Me In
 
-[![Build Status](https://travis-ci.org/jeffcharles/number-switcher-3000.svg?branch=master)](https://travis-ci.org/jeffcharles/number-switcher-3000)
+[![Circle CI](https://circleci.com/gh/jeffcharles/number-switcher-3000.svg?style=shield)](https://circleci.com/gh/jeffcharles/number-switcher-3000)
 
 A project for setting up number forwarding for an apartment buzzer
 
@@ -13,7 +13,7 @@ A project for setting up number forwarding for an apartment buzzer
 
 ## Dev requirements
 
-- Node v0.12.3
+- nvm
 
 ## Running the dev site
 
