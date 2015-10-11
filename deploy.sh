@@ -15,7 +15,7 @@ cat << EOF > Dockerrun.aws.json
 {
   "AWSEBDockerrunVersion": "1",
   "Image": "jeffreycharles/number-switcher-3000:${VERSION}",
-  "Ports": 3000
+  "Ports": [{ "ContainerPort": "3000" }]
 }
 EOF
 
