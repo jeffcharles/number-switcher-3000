@@ -3,8 +3,13 @@
 set -euo pipefail
 
 export AWS_DEFAULT_REGION=us-east-1
+
 VERSION=circle-${CIRCLE_SHA1}-$(date +%s)
 ARCHIVE=${VERSION}.zip
+
+docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+docker build -t jeffreycharles/number-switcher-3000:${VERSION} .
+docker push jeffreycharles/number-switcher-3000
 
 git archive HEAD --format=zip > $ARCHIVE
 aws s3 cp $ARCHIVE s3://number-switcher-3000-deployments/${ARCHIVE}
