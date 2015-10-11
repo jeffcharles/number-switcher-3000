@@ -20,7 +20,7 @@ cat << EOF > Dockerrun.aws.json
 EOF
 
 zip $ARCHIVE Dockerrun.aws.json
-aws s3 cp Dockerrun.aws.json s3://number-switcher-3000-deployments/${ARCHIVE}
+aws s3 cp $ARCHIVE s3://number-switcher-3000-deployments/${ARCHIVE}
 aws elasticbeanstalk create-application-version \
   --application-name number-switcher-3000 \
   --version-label $VERSION \
