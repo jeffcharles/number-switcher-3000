@@ -1,6 +1,6 @@
 'use strict';
 import request from 'supertest-as-promised';
-import app from './../../api/server';
+import app from './../../../api/server';
 import { login } from './helpers';
 
 describe('server', () => {

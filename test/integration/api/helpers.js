@@ -1,5 +1,5 @@
 'use strict';
-import conf from './../../api/conf';
+import conf from './../../../api/conf';
 
 export function login(agent) {
   return agent.post('/api/login')

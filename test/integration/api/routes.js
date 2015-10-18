@@ -1,7 +1,7 @@
 'use strict';
 import request from 'supertest-as-promised';
-import app from './../../api/server';
-import conf from './../../api/conf';
+import app from './../../../api/server';
+import conf from './../../../api/conf';
 import { login } from './helpers';
 
 describe('routes', () => {

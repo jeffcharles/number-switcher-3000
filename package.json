@@ -12,8 +12,11 @@
     "ci": "npm run lint && npm run build:dev && npm run test",
     "lint": "eslint .",
     "preinstall": "npm prune",
+    "postinstall": "selenium-standalone install",
     "start": "node api/index.js",
-    "test": "mocha --compilers js:babel/register test/**/*.js",
+    "test": "npm run test:integration && npm run test:system",
+    "test:integration": "mocha --compilers js:babel/register test/integration/**/*.js",
+    "test:system": "scripts/system-test.sh",
     "watch": "pm2-dev run api/index.js & (npm run build:assets && webpack -d --watch)"
   },
   "author": "Jeffrey Charles <jeffreycharles@beyondtechnicallycorrect.com>",
@@ -34,10 +37,13 @@
     "mocha": "^2.3.3",
     "node-libs-browser": "^0.5.3",
     "pm2": "^0.15.7",
+    "portfinder": "^0.4.0",
+    "selenium-standalone": "^4.7.0",
     "style-loader": "^0.12.4",
     "supertest": "^1.0.1",
     "supertest-as-promised": "^2.0.2",
     "url-loader": "^0.5.5",
+    "webdriverio": "^3.2.5",
     "webpack": "^1.12.2"
   },
   "dependencies": {
