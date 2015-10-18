@@ -58,12 +58,14 @@ class NumberPicker extends React.Component {
     let savedSuccessfully;
     if (this.props.saved) {
       savedSuccessfully = (
-        <Alert
-          bsStyle="success"
-          dismissAfter={2000}
-          onDismiss={() => this.props.dispatch(dismissAlert())}>
-          Saved successfully
-        </Alert>
+        <div className="savedSuccessfully">
+          <Alert
+            bsStyle="success"
+            dismissAfter={2000}
+            onDismiss={() => this.props.dispatch(dismissAlert())}>
+            Saved successfully
+          </Alert>
+        </div>
       );
     }
     return (
