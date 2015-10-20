@@ -9,6 +9,8 @@ machine:
 test:
   override:
     - npm run ci
+    - mkdir -p $CIRCLE_TEST_REPORTS/integration
+    - cp integration-test-results.xml $CIRCLE_TEST_REPORTS/integration/results.xml
 deployment:
   production:
     owner: jeffcharles

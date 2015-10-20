@@ -2,4 +2,5 @@
 /coverage/
 /node_modules/
 /public/
+/integration-test-results.xml
 /npm-debug.log

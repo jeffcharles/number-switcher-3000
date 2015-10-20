@@ -15,7 +15,7 @@
     "postinstall": "selenium-standalone install",
     "start": "node api/index.js",
     "test": "npm run test:integration && npm run test:system",
-    "test:integration": "istanbul cover _mocha -- --compilers js:babel/register test/integration/**/*.js",
+    "test:integration": "multi='spec=- xunit=integration-test-results.xml' istanbul cover _mocha -- --reporter mocha-multi --compilers js:babel/register test/integration/**/*.js",
     "test:system": "scripts/system-test.js",
     "watch": "pm2-dev run api/index.js & (npm run build:assets && webpack -d --watch)"
   },
@@ -36,6 +36,7 @@
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
     "mocha": "^2.3.3",
+    "mocha-multi": "^0.7.2",
     "node-libs-browser": "^0.5.3",
     "pm2": "^0.15.7",
     "portfinder": "^0.4.0",
