@@ -15,7 +15,7 @@
     "postinstall": "selenium-standalone install",
     "start": "node api/index.js",
     "test": "npm run test:integration && npm run test:system",
-    "test:integration": "mocha --compilers js:babel/register test/integration/**/*.js",
+    "test:integration": "istanbul cover _mocha -- --compilers js:babel/register test/integration/**/*.js",
     "test:system": "scripts/system-test.js",
     "watch": "pm2-dev run api/index.js & (npm run build:assets && webpack -d --watch)"
   },
@@ -32,6 +32,7 @@
     "eslint": "^1.6.0",
     "eslint-plugin-react": "^3.5.1",
     "file-loader": "^0.8.1",
+    "istanbul": "^0.4.0",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
     "mocha": "^2.3.3",
