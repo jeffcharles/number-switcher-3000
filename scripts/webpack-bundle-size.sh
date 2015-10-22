@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo
+set -euo pipefail
 
 analyze-bundle-size <(webpack --json)
