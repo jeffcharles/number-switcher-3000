@@ -16,4 +16,4 @@ deployment:
     owner: jeffcharles
     branch: master
     commands:
-      - ./deploy.sh
+      - ./scripts/deploy.sh
