@@ -18,7 +18,7 @@
     "test:integration": "multi='spec=- xunit=integration-test-results.xml' istanbul cover _mocha -- --reporter mocha-multi --compilers js:babel/register test/integration/**/*.js",
     "test:system": "scripts/system-test.js",
     "watch": "pm2-dev run api/index.js & (npm run build:assets && webpack -d --watch)",
-    "webpack-bundle-size": "scripts/webpack-bundle-size.sh"
+    "webpack-bundle-size": "webpack --json | analyze-bundle-size"
   },
   "author": "Jeffrey Charles <jeffreycharles@beyondtechnicallycorrect.com>",
   "license": "BSD-2-Clause",
@@ -49,7 +49,7 @@
     "url-loader": "^0.5.5",
     "webdriverio": "^3.2.5",
     "webpack": "^1.12.2",
-    "webpack-bundle-size-analyzer": "^1.0.3"
+    "webpack-bundle-size-analyzer": "^1.1.0"
   },
   "dependencies": {
     "aws-sdk": "^2.2.7",
