@@ -3,7 +3,7 @@ general:
     - coverage
 machine:
   node:
-    version: v4.1.2
+    version: v4.2.1
   services:
     - docker
 test:
