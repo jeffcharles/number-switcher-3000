@@ -6,6 +6,17 @@ import { login } from './../actions/auth';
 import ErrorAlert from './error-alert';
 
 class Login extends React.Component {
+  constructor() {
+    super();
+    this.onDismissAlert = this.onDismissAlert.bind(this);
+    this.onLogin = this.onLogin.bind(this);
+    this.onLoginTokenChange = this.onLoginTokenChange.bind(this);
+  }
+
+  onDismissAlert() {
+    this.props.dispatch(dismissAlert());
+  }
+
   onLogin(e) {
     e.preventDefault();
     this.props.dispatch(login(this.state.loginToken));
@@ -21,18 +32,18 @@ class Login extends React.Component {
       error = (
         <ErrorAlert
           error={this.props.error}
-          onDismiss={() => this.props.dispatch(dismissAlert())} />
+          onDismiss={this.onDismissAlert} />
       );
     }
     return (
       <div>
         <h1>Login</h1>
         {error}
-        <form onSubmit={this.onLogin.bind(this)}>
+        <form onSubmit={this.onLogin}>
           <div>
             <label htmlFor="loginToken">Login token</label>
             <input id="loginToken"
-              onChange={this.onLoginTokenChange.bind(this)}
+              onChange={this.onLoginTokenChange}
               type="text" value={this.loginToken} />
           </div>
           <button disabled={this.props.isLoggingIn} type="submit">{this.props.isLoggingIn ? 'Logging In' : 'Login'}</button>

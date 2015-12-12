@@ -15,7 +15,7 @@
     "postinstall": "selenium-standalone install",
     "start": "node api/index.js",
     "test": "npm run test:integration && npm run test:system",
-    "test:integration": "multi='spec=- xunit=integration-test-results.xml' istanbul cover _mocha -- --reporter mocha-multi --compilers js:babel/register test/integration/**/*.js",
+    "test:integration": "multi='spec=- xunit=integration-test-results.xml' istanbul cover _mocha -- --reporter mocha-multi --compilers js:babel-register test/integration/**/*.js",
     "test:system": "scripts/system-test.js",
     "watch": "pm2-dev run api/index.js & (npm run build:assets && webpack -d --watch)",
     "webpack-bundle-size": "webpack --json | analyze-bundle-size"
@@ -27,11 +27,11 @@
     "url": "https://github.com/jeffcharles/number-switcher-3000"
   },
   "devDependencies": {
-    "babel-eslint": "^4.1.3",
+    "babel-eslint": "^4.1.6",
     "bootstrap": "^3.3.6",
     "css-loader": "^0.21.0",
-    "eslint": "^1.7.3",
-    "eslint-plugin-react": "^3.6.3",
+    "eslint": "^1.10.3",
+    "eslint-plugin-react": "^3.11.2",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.5",
     "istanbul": "^0.4.1",
@@ -47,15 +47,18 @@
     "supertest": "^1.0.1",
     "supertest-as-promised": "^2.0.2",
     "url-loader": "^0.5.7",
-    "webdriverio": "^3.2.5",
+    "webdriverio": "^3.3.0",
     "webpack": "^1.12.9",
-    "webpack-bundle-size-analyzer": "^1.1.0"
+    "webpack-bundle-size-analyzer": "^1.2.0"
   },
   "dependencies": {
     "aws-sdk": "^2.2.20",
-    "babel": "^5.8.29",
-    "babel-core": "^5.8.32",
-    "babel-loader": "^5.3.2",
+    "babel": "^6.1.18",
+    "babel-core": "^6.2.1",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "babel-register": "^6.3.13",
     "body-parser": "^1.14.1",
     "compression": "^1.6.0",
     "cookie-parser": "^1.4.0",

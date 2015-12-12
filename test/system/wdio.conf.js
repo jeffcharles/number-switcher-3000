@@ -13,6 +13,6 @@ exports.config = {
   waitForTimeout: 1000,
   framework: 'mocha',
   mochaOpts: {
-    compilers: ['js:babel/register']
+    compilers: ['js:babel-register']
   }
 };
