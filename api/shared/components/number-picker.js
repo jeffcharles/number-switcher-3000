@@ -9,6 +9,15 @@ import ErrorAlert from './error-alert';
 import Loading from './loading';
 
 class NumberPicker extends React.Component {
+  constructor() {
+    super();
+    this.getErrorAlert = this.getErrorAlert.bind(this);
+    this.onActiveNumberChange = this.onActiveNumberChange.bind(this);
+    this.onDismissAlert = this.onDismissAlert.bind(this);
+    this.onLogout = this.onLogout.bind(this);
+    this.onUpdateNumber = this.onUpdateNumber.bind(this);
+  }
+
   componentWillMount() {
     this.setState({});
   }
@@ -27,7 +36,7 @@ class NumberPicker extends React.Component {
       alert = (
         <ErrorAlert
           error={err}
-          onDismiss={() => this.props.dispatch(dismissAlert())} />
+          onDismiss={this.onDismissAlert} />
       );
     }
     return alert;
@@ -35,6 +44,10 @@ class NumberPicker extends React.Component {
 
   onActiveNumberChange(e) {
     this.setState({ activeNumber: e.target.value });
+  }
+
+  onDismissAlert() {
+    this.props.dispatch(dismissAlert());
   }
 
   onLogout() {
@@ -62,7 +75,7 @@ class NumberPicker extends React.Component {
           <Alert
             bsStyle="success"
             dismissAfter={2000}
-            onDismiss={() => this.props.dispatch(dismissAlert())}>
+            onDismiss={this.onDismissAlert}>
             Saved successfully
           </Alert>
         </div>
@@ -76,20 +89,20 @@ class NumberPicker extends React.Component {
         {this.getErrorAlert(this.props.numberError)}
         {this.props.numbers.isEmpty() ?
           <Loading /> : (
-          <form onSubmit={this.onUpdateNumber.bind(this)}>
+          <form onSubmit={this.onUpdateNumber}>
             {this.props.numbers.map(number =>
               <div className="radio" key={number.get('number')}>
                 <label>
                   <input
                     checked={(this.state.activeNumber === number.get('number')) || (!this.state.activeNumber && number.get('active'))}
                     name="phone-number"
-                    onChange={this.onActiveNumberChange.bind(this)}
+                    onChange={this.onActiveNumberChange}
                     type="radio" value={number.get('number')} />
                   {number.get('name')}: {number.get('number')}
                 </label>
               </div>
             )}
-            <button disabled={this.props.isSaving} type="submit">{this.props.isSaving ? 'Saving' : 'Save'}</button> <button disabled={this.props.isLoggingOut} onClick={this.onLogout.bind(this)} type="button">{this.props.isLoggingOut ? 'Logging out' : 'Logout'}</button>
+            <button disabled={this.props.isSaving} type="submit">{this.props.isSaving ? 'Saving' : 'Save'}</button> <button disabled={this.props.isLoggingOut} onClick={this.onLogout} type="button">{this.props.isLoggingOut ? 'Logging out' : 'Logout'}</button>
           </form>
         )}
       </div>
