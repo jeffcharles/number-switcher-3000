@@ -52,7 +52,7 @@
     "webpack-bundle-size-analyzer": "^1.2.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.2.23",
+    "aws-sdk": "^2.2.24",
     "babel": "^6.3.13",
     "babel-core": "^6.3.17",
     "babel-loader": "^6.2.0",
