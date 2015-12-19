@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "unused-ignores": [
+      "babel-preset-es2015",
+      "babel-preset-react",
+      "hbs"
+    ]
+  }
+}
