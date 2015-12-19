@@ -2,7 +2,6 @@
 import AWS from 'aws-sdk';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
-import exphbs from 'express-handlebars';
 import express from 'express';
 import Immutable from 'immutable';
 import React from 'react';
@@ -19,8 +18,7 @@ AWS.config.update({ region: conf.aws_region });
 import routes from './routes';
 
 const app = express();
-app.engine('handlebars', exphbs({ defaultLayout: null }));
-app.set('view engine', 'handlebars');
+app.set('view engine', 'hbs');
 
 app.use(cookieParser());
 app.use((req, res, next) => {
