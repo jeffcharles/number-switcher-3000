@@ -42,7 +42,7 @@
     "mocha": "^2.3.4",
     "mocha-multi": "^0.7.2",
     "node-libs-browser": "^0.5.3",
-    "pm2": "^0.15.10",
+    "pm2": "^1.0.0",
     "portfinder": "^0.4.0",
     "selenium-standalone": "^4.8.0",
     "style-loader": "^0.13.0",
