@@ -27,7 +27,7 @@
     "url": "https://github.com/jeffcharles/number-switcher-3000"
   },
   "devDependencies": {
-    "babel-core": "^6.4.0",
+    "babel-core": "^6.4.5",
     "babel-eslint": "^4.1.6",
     "babel-loader": "^6.2.1",
     "bootstrap": "^3.3.6",
@@ -54,7 +54,7 @@
     "webpack-bundle-size-analyzer": "^1.3.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.2.30",
+    "aws-sdk": "^2.2.31",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-register": "^6.4.3",
@@ -71,7 +71,7 @@
     "react-redux": "^4.0.6",
     "redux": "^3.0.5",
     "redux-thunk": "^1.0.3",
-    "superagent": "^1.6.1",
+    "superagent": "^1.7.0",
     "xml2js": "^0.4.16"
   }
 }
