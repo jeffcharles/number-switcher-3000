@@ -1,6 +1,7 @@
 'use strict';
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './app/index.js',
@@ -24,6 +25,11 @@ module.exports = {
       { test: /\.svg$/, loader: 'file-loader' }
     ]
   },
-  plugins: [new ExtractTextPlugin('bundle.css')],
+  plugins: [
+    new ExtractTextPlugin('bundle.css'),
+    new webpack.DefinePlugin({
+      'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') } // eslint-disable-line no-process-env
+    })
+  ],
   resolve: { root: __dirname }
 };

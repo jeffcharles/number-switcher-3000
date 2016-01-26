@@ -8,7 +8,9 @@ machine:
     - docker
 test:
   override:
-    - npm run ci
+    - npm run ci:
+        environment:
+          NODE_ENV: production
     - mkdir -p $CIRCLE_TEST_REPORTS/integration
     - cp integration-test-results.xml $CIRCLE_TEST_REPORTS/integration/results.xml
 deployment:
