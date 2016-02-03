@@ -6,6 +6,8 @@ machine:
     version: v5.5.0
   services:
     - docker
+  pre:
+    - sudo apt-get update && sudo apt-get install --only-upgrade google-chrome-stable
 test:
   override:
     - npm run ci:
