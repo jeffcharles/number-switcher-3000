@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.4.5",
-    "babel-eslint": "^4.1.6",
+    "babel-eslint": "4.1.6",
     "babel-loader": "^6.2.1",
     "bootstrap": "^3.3.6",
     "css-loader": "^0.23.1",
@@ -43,7 +43,7 @@
     "mocha-multi": "^0.7.2",
     "pm2": "^1.0.0",
     "portfinder": "^0.4.0",
-    "selenium-standalone": "^4.8.0",
+    "selenium-standalone": "4.8.0",
     "style-loader": "^0.13.0",
     "supertest": "^1.1.0",
     "supertest-as-promised": "^2.0.2",
@@ -67,8 +67,8 @@
     "react": "^0.14.7",
     "react-bootstrap": "^0.28.2",
     "react-dom": "^0.14.7",
-    "react-redux": "^4.1.2",
-    "redux": "^3.1.4",
+    "react-redux": "^4.2.1",
+    "redux": "^3.2.1",
     "redux-thunk": "^1.0.3",
     "superagent": "^1.7.2",
     "xml2js": "^0.4.16"
