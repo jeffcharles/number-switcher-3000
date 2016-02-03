@@ -43,7 +43,7 @@
     "mocha-multi": "^0.7.2",
     "pm2": "^1.0.0",
     "portfinder": "^0.4.0",
-    "selenium-standalone": "4.8.0",
+    "selenium-standalone": "^4.9.0",
     "style-loader": "^0.13.0",
     "supertest": "^1.1.0",
     "supertest-as-promised": "^2.0.2",
