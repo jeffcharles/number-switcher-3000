@@ -27,7 +27,7 @@
     "url": "https://github.com/jeffcharles/number-switcher-3000"
   },
   "devDependencies": {
-    "babel-core": "^6.4.5",
+    "babel-core": "^6.5.0",
     "babel-eslint": "^4.1.8",
     "babel-loader": "^6.2.1",
     "bootstrap": "^3.3.6",
