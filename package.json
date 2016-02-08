@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.2.33",
-    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-es2015": "^6.5.0",
     "babel-preset-react": "^6.3.13",
     "babel-register": "^6.4.3",
     "body-parser": "^1.14.2",
