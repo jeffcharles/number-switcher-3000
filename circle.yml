@@ -3,7 +3,7 @@ general:
     - coverage
 machine:
   node:
-    version: v5.5.0
+    version: v5.6.0
   services:
     - docker
   pre:
