@@ -37,7 +37,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "istanbul": "^0.4.2",
-    "less": "^2.6.0",
+    "less": "^2.6.1",
     "less-loader": "^2.2.2",
     "mocha": "^2.4.5",
     "mocha-multi": "^0.7.2",
