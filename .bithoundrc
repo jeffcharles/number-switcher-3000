@@ -1,4 +1,9 @@
 {
+  "critics": {
+    "lint": {
+      "engine": "none"
+    }
+  },
   "dependencies": {
     "unused-ignores": [
       "babel-preset-es2015",
