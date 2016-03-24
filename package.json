@@ -44,7 +44,7 @@
     "pm2": "^1.0.2",
     "portfinder": "1.0.0",
     "selenium-standalone": "^5.0.0",
-    "style-loader": "^0.13.0",
+    "style-loader": "^0.13.1",
     "supertest": "^1.2.0",
     "supertest-as-promised": "^3.0.0",
     "url-loader": "^0.5.7",
