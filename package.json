@@ -65,7 +65,7 @@
     "immutable": "^3.7.6",
     "rc": "^1.1.6",
     "react": "^0.14.7",
-    "react-bootstrap": "^0.28.3",
+    "react-bootstrap": "^0.28.4",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.1",
     "redux": "^3.2.1",
