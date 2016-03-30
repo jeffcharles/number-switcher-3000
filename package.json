@@ -28,11 +28,11 @@
   },
   "devDependencies": {
     "babel-core": "^6.7.4",
-    "babel-eslint": "^5.0.0",
+    "babel-eslint": "^6.0.0",
     "babel-loader": "^6.2.4",
     "bootstrap": "^3.3.6",
     "css-loader": "^0.23.1",
-    "eslint": "2.2.0",
+    "eslint": "^2.5.3",
     "eslint-plugin-react": "^4.2.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
