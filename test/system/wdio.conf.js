@@ -14,5 +14,6 @@ exports.config = {
   framework: 'mocha',
   mochaOpts: {
     compilers: ['js:babel-register']
-  }
+  },
+  sync: false
 };
