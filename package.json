@@ -50,7 +50,7 @@
     "url-loader": "^0.5.7",
     "wdio-mocha-framework": "^0.2.12",
     "webdriverio": "^4.0.5",
-    "webpack": "^1.12.14",
+    "webpack": "^1.12.15",
     "webpack-bundle-size-analyzer": "^2.0.1"
   },
   "dependencies": {
