@@ -28,22 +28,13 @@ function queryNumbersFail(err) {
 export function queryNumbers() {
   return dispatch => {
     dispatch(queryNumbersAttempt());
-    return new Promise((resolve, reject) => {
-      request.get('/api/phonenumbers')
-        .end((err, res) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(Immutable.fromJS(res.body.numbers));
-          }
-        });
-    })
-    .then(numbers => {
-      dispatch(queryNumbersSuccess(numbers));
-    })
-    .catch(err => {
-      dispatch(queryNumbersFail(err));
-    });
+    return request.get('/api/phonenumbers')
+      .then(res => {
+        dispatch(queryNumbersSuccess(Immutable.fromJS(res.body.numbers)));
+      })
+      .catch(err => {
+        dispatch(queryNumbersFail(err));
+      });
   };
 }
 
@@ -73,23 +64,14 @@ function updateNumberFail(err) {
 export function updateNumber(number) {
   return dispatch => {
     dispatch(updateNumberAttempt());
-    return new Promise((resolve, reject) => {
-      request.put('/api/activephonenumber')
-        .set('content-type', 'application/json')
-        .send({ number })
-        .end(err => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-        });
-    })
-    .then(() => {
-      dispatch(updateNumberSuccess(number));
-    })
-    .catch(err => {
-      dispatch(updateNumberFail(err));
-    });
+    return request.put('/api/activephonenumber')
+      .set('content-type', 'application/json')
+      .send({ number })
+      .then(() => {
+        dispatch(updateNumberSuccess(number));
+      })
+      .catch(err => {
+        dispatch(updateNumberFail(err));
+      });
   };
 }

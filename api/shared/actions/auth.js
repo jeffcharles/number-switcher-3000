@@ -3,16 +3,8 @@ import Immutable from 'immutable';
 import request from 'superagent';
 
 function getActions() {
-  return new Promise((resolve, reject) => {
-    request.get('/api')
-      .end((err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(Immutable.fromJS(res.body.actions));
-        }
-      });
-  });
+  return request.get('/api')
+    .then(res => Immutable.fromJS(res.body.actions));
 }
 
 export const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
@@ -42,25 +34,16 @@ function loginFail(err) {
 export function login(loginToken) {
   return dispatch => {
     dispatch(loginAttempt(loginToken));
-    return new Promise((resolve, reject) => {
-      request.post('/api/login')
-        .set('content-type', 'application/json')
-        .send({ loginToken })
-        .end(err => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-        });
-    })
-    .then(getActions)
-    .then(actions => {
-      dispatch(loginSuccess(actions));
-    })
-    .catch(err => {
-      dispatch(loginFail(err));
-    });
+    return request.post('/api/login')
+      .set('content-type', 'application/json')
+      .send({ loginToken })
+      .then(getActions)
+      .then(actions => {
+        dispatch(loginSuccess(actions));
+      })
+      .catch(err => {
+        dispatch(loginFail(err));
+      });
   };
 }
 
@@ -90,22 +73,13 @@ function logoutFail(err) {
 export function logout() {
   return dispatch => {
     dispatch(logoutAttempt());
-    return new Promise((resolve, reject) => {
-      request.post('/api/logout')
-        .end(err => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-        });
-    })
-    .then(getActions)
-    .then(actions => {
-      dispatch(logoutSuccess(actions));
-    })
-    .catch(err => {
-      dispatch(logoutFail(err));
-    });
+    return request.post('/api/logout')
+      .then(getActions)
+      .then(actions => {
+        dispatch(logoutSuccess(actions));
+      })
+      .catch(err => {
+        dispatch(logoutFail(err));
+      });
   };
 }
