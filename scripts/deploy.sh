@@ -7,8 +7,9 @@ export AWS_DEFAULT_REGION=us-east-1
 VERSION=circle-$(date +%s)-${CIRCLE_SHA1}
 ARCHIVE=${VERSION}.zip
 
-docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+npm prune --production
 docker build -t jeffreycharles/number-switcher-3000:${VERSION} .
+docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 docker push jeffreycharles/number-switcher-3000
 
 cat << EOF > Dockerrun.aws.json
