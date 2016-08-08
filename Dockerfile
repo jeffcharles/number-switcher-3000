@@ -1,4 +1,4 @@
-FROM node:6.2.2-slim
+FROM node:6.3.1-slim
 MAINTAINER Jeffrey Charles <jeffreycharles@beyondtechnicallycorrect.com>
 
 COPY . /usr/src/node
