@@ -89,22 +89,23 @@ class NumberPicker extends React.Component {
         {this.getErrorAlert(this.props.numberError)}
         {this.props.numbers.isEmpty() ?
           <Loading /> : (
-          <form onSubmit={this.onUpdateNumber}>
-            {this.props.numbers.map(number =>
-              <div className="radio" key={number.get('number')}>
-                <label>
-                  <input
-                    checked={(this.state.activeNumber === number.get('number')) || (!this.state.activeNumber && number.get('active'))}
-                    name="phone-number"
-                    onChange={this.onActiveNumberChange}
-                    type="radio" value={number.get('number')} />
-                  {number.get('name')}: {number.get('number')}
-                </label>
-              </div>
-            )}
-            <button disabled={this.props.isSaving} type="submit">{this.props.isSaving ? 'Saving' : 'Save'}</button> <button disabled={this.props.isLoggingOut} onClick={this.onLogout} type="button">{this.props.isLoggingOut ? 'Logging out' : 'Logout'}</button>
-          </form>
-        )}
+            <form onSubmit={this.onUpdateNumber}>
+              {this.props.numbers.map(number =>
+                <div className="radio" key={number.get('number')}>
+                  <label>
+                    <input
+                      checked={(this.state.activeNumber === number.get('number')) || (!this.state.activeNumber && number.get('active'))}
+                      name="phone-number"
+                      onChange={this.onActiveNumberChange}
+                      type="radio" value={number.get('number')} />
+                    {number.get('name')}: {number.get('number')}
+                  </label>
+                </div>
+              )}
+              <button disabled={this.props.isSaving} type="submit">{this.props.isSaving ? 'Saving' : 'Save'}</button> <button disabled={this.props.isLoggingOut} onClick={this.onLogout} type="button">{this.props.isLoggingOut ? 'Logging out' : 'Logout'}</button>
+            </form>
+          )
+        }
       </div>
     );
   }
